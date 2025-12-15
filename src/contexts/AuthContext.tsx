@@ -1,10 +1,10 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
-import { User, currentUser, coordinatorUser } from '@/data/mockData';
+import { User, users } from '@/data/mockData';
 
 interface AuthContextType {
   user: User | null;
   isAuthenticated: boolean;
-  login: (email: string, password: string, role: 'student' | 'coordinator') => Promise<boolean>;
+  login: (email: string, password: string) => Promise<boolean>;
   logout: () => void;
 }
 
@@ -13,15 +13,14 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
 
-  const login = async (email: string, password: string, role: 'student' | 'coordinator'): Promise<boolean> => {
-    // Simulated login - accepts any credentials
+  const login = async (email: string, password: string): Promise<boolean> => {
     if (email && password) {
-      if (role === 'coordinator') {
-        setUser(coordinatorUser);
-      } else {
-        setUser(currentUser);
+      for (const currentUser of Object.values(users)) {
+        if (currentUser.email === email) {
+          setUser(currentUser);
+          return true;
+        }
       }
-      return true;
     }
     return false;
   };

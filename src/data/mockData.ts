@@ -4,7 +4,7 @@ export interface User {
   id: string;
   name: string;
   email: string;
-  role: 'student' | 'coordinator';
+  role: string;
   course: string;
   matricula?: string;
   avatar?: string;
@@ -77,23 +77,44 @@ export interface Certificate {
   validationCode: string;
 }
 
-// Current user (simulated)
-export const currentUser: User = {
-  id: '1',
-  name: 'Ana Souza',
-  email: 'ana.souza@ufma.br',
-  role: 'student',
-  course: 'Ciência da Computação',
-  matricula: '2021001234',
-};
-
-export const coordinatorUser: User = {
-  id: '2',
-  name: 'Prof. Dr. Roberto Lima',
-  email: 'roberto.lima@ufma.br',
-  role: 'coordinator',
-  course: 'Ciência da Computação',
-};
+export const users = {
+  student: {
+    id: '1',
+    name: 'Ana Souza',
+    email: 'ana.souza@ufma.br',
+    role: 'student',
+    course: 'Ciência da Computação',
+    matricula: '2021001234',
+  }, 
+  coordinator: {
+    id: '2',
+    name: 'Prof. Dr. Roberto Lima',
+    email: 'roberto.lima@ufma.br',
+    role: 'coordinator',
+    course: 'Ciência da Computação',
+  }, 
+  teacher: {
+    id: '3',
+    name: 'João Silva',
+    email: 'joao.silva@ufma.br',
+    role: 'teacher',
+    course: 'Ciência da Computação',
+  }, 
+  secretary: {
+    id: '4',
+    name: 'Maria Oliveira',
+    email: 'maria.oliveira@ufma.br',
+    role: 'secretary',
+    course: 'Ciência da Computação',
+  }, 
+  student_scholar: {
+    id: '5',
+    name: 'Patrick Camara Araujo',
+    email: 'patrick.araujo@discente.ufma.br',
+    role: 'student_scholar',
+    course: 'Ciência da Computação',
+  }
+}
 
 // Student progress data
 export const studentProgress = {

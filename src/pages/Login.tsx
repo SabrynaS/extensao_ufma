@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -7,29 +6,32 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { GraduationCap, Eye, EyeOff } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { useNavigate } from 'react-router-dom';
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [role, setRole] = useState<'student' | 'coordinator'>('student');
   const [isLoading, setIsLoading] = useState(false);
-  const { login } = useAuth();
   const navigate = useNavigate();
+  const { login } = useAuth();
   const { toast } = useToast();
+
+  function handleSignIn() {
+    navigate('/sign-up');
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
 
     try {
-      const success = await login(email, password, role);
+      const success = await login(email, password);
       if (success) {
         toast({
           title: 'Login realizado com sucesso!',
           description: 'Redirecionando para o painel...',
         });
-        navigate(role === 'coordinator' ? '/coordinator' : '/student');
       } else {
         toast({
           title: 'Erro no login',
@@ -62,32 +64,6 @@ export default function Login() {
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
-            {/* Role selection */}
-            <div className="grid grid-cols-2 gap-2 p-1 bg-muted rounded-lg">
-              <button
-                type="button"
-                onClick={() => setRole('student')}
-                className={`py-2 px-4 rounded-md text-sm font-medium transition-colors ${
-                  role === 'student' 
-                    ? 'bg-card text-foreground shadow-sm' 
-                    : 'text-muted-foreground hover:text-foreground'
-                }`}
-              >
-                Discente
-              </button>
-              <button
-                type="button"
-                onClick={() => setRole('coordinator')}
-                className={`py-2 px-4 rounded-md text-sm font-medium transition-colors ${
-                  role === 'coordinator' 
-                    ? 'bg-card text-foreground shadow-sm' 
-                    : 'text-muted-foreground hover:text-foreground'
-                }`}
-              >
-                Coordenador
-              </button>
-            </div>
-
             <div className="space-y-2">
               <Label htmlFor="email">E-mail institucional</Label>
               <Input
@@ -129,6 +105,12 @@ export default function Login() {
               Esqueceu sua senha?{' '}
               <button type="button" className="text-primary hover:underline">
                 Recuperar acesso
+              </button>
+            </p>
+            <p  className="text-center text-sm text-muted-foreground">
+              Ainda não tem uma conta?{' '}
+              <button onClick={handleSignIn} type="button" className="text-primary hover:underline">
+                Criar conta
               </button>
             </p>
           </form>
