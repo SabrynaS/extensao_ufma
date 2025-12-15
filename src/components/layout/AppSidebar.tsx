@@ -11,7 +11,8 @@ import {
   Settings,
   Bell,
   LogOut,
-  GraduationCap
+  GraduationCap, 
+  CalendarIcon
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/contexts/AuthContext';
@@ -23,13 +24,23 @@ interface NavItem {
   badge?: number;
 }
 
-const studentNavItems: NavItem[] = [
+const studentScholarNavItems: NavItem[] = [
   { title: 'Visão Geral', icon: LayoutDashboard, path: '/student' },
   { title: 'Minhas Solicitações', icon: FileText, path: '/student/requests' },
-  { title: 'Catálogo de Eventos', icon: Search, path: '/student/events' },
+  { title: 'Catálogo de Eventos', icon: Search, path: '/events' },
+  { title: 'Criar Evento', icon: CalendarIcon, path: '/events/create' },
   { title: 'Meus Certificados', icon: Award, path: '/student/certificates' },
   { title: 'Perfil', icon: User, path: '/student/profile' },
 ];
+
+const studentNavItems: NavItem[] = [
+  { title: 'Visão Geral', icon: LayoutDashboard, path: '/student' },
+  { title: 'Minhas Solicitações', icon: FileText, path: '/student/requests' },
+  { title: 'Catálogo de Eventos', icon: Search, path: '/events' },
+  { title: 'Meus Certificados', icon: Award, path: '/student/certificates' },
+  { title: 'Perfil', icon: User, path: '/student/profile' },
+];
+
 
 const coordinatorNavItems: NavItem[] = [
   { title: 'Painel Geral', icon: LayoutDashboard, path: '/coordinator' },
@@ -41,14 +52,42 @@ const coordinatorNavItems: NavItem[] = [
   { title: 'Central de Alertas', icon: Bell, path: '/coordinator/alerts', badge: 1 },
 ];
 
+const roleConfig = {
+  coordinator: {
+    navItems: coordinatorNavItems,
+    panelTitle: "Painel da Coordenação",
+  },
+
+  secretary: {
+    navItems: coordinatorNavItems,
+    panelTitle: "Painel da Secretaria",
+  },
+
+  teacher: {
+    navItems: coordinatorNavItems,
+    panelTitle: "Painel do Docente",
+  },
+
+  student: {
+    navItems: studentNavItems,
+    panelTitle: "Painel do Discente",
+  },
+
+  student_scholar: {
+    navItems: studentScholarNavItems,
+    panelTitle: "Painel do Discente",
+  },
+} as const;
+
 export function AppSidebar() {
   const location = useLocation();
   const navigate = useNavigate();
   const { user, logout } = useAuth();
 
-  const isCoordinator = user?.role === 'coordinator';
-  const navItems = isCoordinator ? coordinatorNavItems : studentNavItems;
-  const panelTitle = isCoordinator ? 'Painel da Coordenação' : 'Painel do Discente';
+  const role = user?.role ?? "student";
+
+  const { navItems, panelTitle } =
+          roleConfig[role] ?? roleConfig.student;
 
   const handleLogout = () => {
     logout();
