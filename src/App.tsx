@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "@/contexts/AuthContext";
 
 import Login from "./pages/Login";
+import SignUp from "./pages/SignUp";
 import StudentDashboard from "./pages/student/Dashboard";
 import StudentRequests from "./pages/student/Requests";
 import StudentEvents from "./pages/student/Events";
@@ -17,6 +18,7 @@ import CoordinatorStudents from "./pages/coordinator/Students";
 import CoordinatorOpportunities from "./pages/coordinator/Opportunities";
 import CoordinatorSettings from "./pages/coordinator/Settings";
 import CoordinatorAlerts from "./pages/coordinator/Alerts";
+import CreateEvent from "./pages/events/CreateEvent";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -29,16 +31,16 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
 
 function AppRoutes() {
   const { isAuthenticated, user } = useAuth();
-  
+
   return (
     <Routes>
       <Route path="/login" element={isAuthenticated ? <Navigate to={user?.role === 'coordinator' ? '/coordinator' : '/student'} replace /> : <Login />} />
       <Route path="/" element={<Navigate to="/login" replace />} />
+      <Route path="/sign-up" element={<SignUp />} />
       
       {/* Student Routes */}
       <Route path="/student" element={<ProtectedRoute><StudentDashboard /></ProtectedRoute>} />
       <Route path="/student/requests" element={<ProtectedRoute><StudentRequests /></ProtectedRoute>} />
-      <Route path="/student/events" element={<ProtectedRoute><StudentEvents /></ProtectedRoute>} />
       <Route path="/student/certificates" element={<ProtectedRoute><StudentCertificates /></ProtectedRoute>} />
       <Route path="/student/profile" element={<ProtectedRoute><StudentProfile /></ProtectedRoute>} />
       
@@ -51,6 +53,10 @@ function AppRoutes() {
       <Route path="/coordinator/settings" element={<ProtectedRoute><CoordinatorSettings /></ProtectedRoute>} />
       <Route path="/coordinator/alerts" element={<ProtectedRoute><CoordinatorAlerts /></ProtectedRoute>} />
       
+      {/* Events Routes */}
+      <Route path="/events" element={<ProtectedRoute><StudentEvents /></ProtectedRoute>} />
+      <Route path="/events/create" element={<ProtectedRoute><CreateEvent /></ProtectedRoute>} />
+
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
