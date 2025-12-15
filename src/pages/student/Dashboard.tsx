@@ -120,7 +120,7 @@ export default function StudentDashboard() {
 
           <Card 
             className="cursor-pointer hover:border-primary/50 transition-colors"
-            onClick={() => navigate('/student/events')}
+            onClick={() => navigate('/events')}
           >
             <CardContent className="p-6 flex flex-col items-center text-center">
               <div className="w-12 h-12 rounded-full bg-muted flex items-center justify-center mb-3">
