@@ -70,7 +70,7 @@ export function PPCCurrentForm({ currentVersion, onSave }: PPCCurrentFormProps) 
 
       <div className="space-y-3">
         <div>
-          <Label className="text-base">Regra de Alocação Modular (RF064)</Label>
+          <Label className="text-base">Regra de Alocação Modular </Label>
           <p className="text-sm text-muted-foreground">
             Define como as horas de extensão podem ser distribuídas entre diferentes categorias
           </p>
