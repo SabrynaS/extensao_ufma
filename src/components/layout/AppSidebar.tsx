@@ -27,7 +27,7 @@ interface NavItem {
 const studentScholarNavItems: NavItem[] = [
   { title: 'Visão Geral', icon: LayoutDashboard, path: '/student' },
   { title: 'Minhas Solicitações', icon: FileText, path: '/student/requests' },
-  { title: 'Catálogo de Eventos', icon: Search, path: '/events' },
+  { title: 'Oportunidades', icon: Search, path: '/events' },
   { title: 'Criar Evento', icon: CalendarIcon, path: '/events/create' },
   { title: 'Meus Certificados', icon: Award, path: '/student/certificates' },
   { title: 'Perfil', icon: User, path: '/student/profile' },
@@ -36,7 +36,7 @@ const studentScholarNavItems: NavItem[] = [
 const studentNavItems: NavItem[] = [
   { title: 'Visão Geral', icon: LayoutDashboard, path: '/student' },
   { title: 'Minhas Solicitações', icon: FileText, path: '/student/requests' },
-  { title: 'Catálogo de Eventos', icon: Search, path: '/events' },
+  { title: 'Oportunidades', icon: Search, path: '/events' },
   { title: 'Meus Certificados', icon: Award, path: '/student/certificates' },
   { title: 'Perfil', icon: User, path: '/student/profile' },
 ];

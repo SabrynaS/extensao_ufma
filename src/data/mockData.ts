@@ -113,7 +113,23 @@ export const users = {
     email: 'patrick.araujo@discente.ufma.br',
     role: 'student_scholar',
     course: 'Ciência da Computação',
+  },
+  admin: {
+    id: '6',
+    name: 'Leidiane',
+    email: 'leidiane@ufma.br',
+    role: 'admin',
+    course: 'Ciência da Computação',
+  },
+  user_comissao: {
+    id: '7',
+    name: 'Humberto Silva',
+    email: 'humberto.silva@ufma.br',
+    role: 'comissao',
+    course: 'Ciência da Computação',
   }
+
+
 }
 
 // Student progress data

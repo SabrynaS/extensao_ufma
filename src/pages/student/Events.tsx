@@ -80,11 +80,11 @@ export default function StudentEvents() {
   };
 
   return (
-    <AppLayout breadcrumb={['Início', 'Catálogo de Eventos']}>
+    <AppLayout breadcrumb={['Início', 'Oportunidades']}>
       <div className="space-y-6">
         <div>
-          <h1 className="text-2xl font-bold text-primary">Catálogo de Oportunidades de Extensão</h1>
-          <p className="text-muted-foreground">
+          <h1 className="text-2xl font-bold text-primary">Oportunidades de Extensão</h1>
+          <p className="text-muted-foreground pt-2">
             Explore cursos, projetos, eventos e outras atividades de extensão disponíveis
           </p>
         </div>
