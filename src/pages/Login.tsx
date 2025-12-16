@@ -4,14 +4,17 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { GraduationCap, Eye, EyeOff } from 'lucide-react';
+import { GraduationCap, Eye, EyeOff, CheckCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useNavigate } from 'react-router-dom';
+import { Modal } from '@/components/ui/modal';
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalContent, setModalContent] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const { login } = useAuth();
@@ -19,6 +22,25 @@ export default function Login() {
 
   function handleSignIn() {
     navigate('/sign-up');
+  }
+
+  function handleCloseModal() {
+    setIsModalOpen(false);
+  };
+
+  function handleOpenModal() {
+    setIsModalOpen(true);
+  }
+
+  function handleSubmitRecoverPassword(e: React.FormEvent) {
+    e.preventDefault();
+
+    toast({
+      title: 'Recuperação de senha',
+      description: 'Instruções para recuperação de senha foram enviadas para o seu e-mail institucional.',
+    });
+
+    handleCloseModal();
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -101,21 +123,53 @@ export default function Login() {
               {isLoading ? 'Entrando...' : 'Acessar Sistema'}
             </Button>
 
-            <p className="text-center text-sm text-muted-foreground">
-              Esqueceu sua senha?{' '}
-              <button type="button" className="text-primary hover:underline">
+            <div className="flex justify-between text-center text-sm">
+              <button
+                type="button"
+                onClick={handleOpenModal}
+                className="text-primary hover:underline transition-colors"
+              >
                 Recuperar acesso
               </button>
-            </p>
-            <p  className="text-center text-sm text-muted-foreground">
-              Ainda não tem uma conta?{' '}
-              <button onClick={handleSignIn} type="button" className="text-primary hover:underline">
+              <button
+                type="button"
+                onClick={handleSignIn}
+                className="text-primary hover:underline transition-colors"
+              >
                 Criar conta
               </button>
-            </p>
+            </div>
           </form>
+          <div className="mt-6 pt-4 border-t border-border/50 text-center">
+            <p className="text-sm text-muted-foreground mb-3">
+              Busca informações ou precisa verificar a autenticidade de um documento?
+            </p>
+            <Button 
+              onClick={() => navigate('validate')}
+              className="w-full"
+            >
+              Validar Certificado
+            </Button>
+          </div>
         </CardContent>
       </Card>
+      {isModalOpen && 
+        <Modal isOpen={isModalOpen} onClose={handleCloseModal} icon={<CheckCircle />}>
+          <form onSubmit={handleSubmitRecoverPassword}>
+            <p>Digite seu e-mail institucional para recuperar sua senha.</p>
+            <Input 
+              id="recovery-email"
+              type="email" 
+              placeholder="Digite seu e-mail institucional" 
+              required
+            />
+            <div className="flex flex-row items-center justify-center gap-4">
+              <Button type='submit' className="mt-4 w-2/4">Enviar</Button>
+              <Button type='button' onClick={handleCloseModal} className="mt-4 w-2/4">Cancelar</Button>
+            </div>
+          </form>
+        </Modal>
+      }
     </div>
   );
 }

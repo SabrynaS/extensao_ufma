@@ -12,7 +12,8 @@ import {
   Bell,
   LogOut,
   GraduationCap, 
-  CalendarIcon
+  CalendarIcon,
+  Network
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/contexts/AuthContext';
@@ -46,6 +47,7 @@ const coordinatorNavItems: NavItem[] = [
   { title: 'Painel Geral', icon: LayoutDashboard, path: '/coordinator' },
   { title: 'Fila de Aprovações', icon: ClipboardList, path: '/coordinator/approvals' },
   { title: 'Gerenciar Alunos', icon: Users, path: '/coordinator/students' },
+  { title: 'Gerenciar Grupos', icon: Network, path: '/coordinator/groups' },
   { title: 'Relatórios e Métricas', icon: BarChart3, path: '/coordinator/reports' },
   { title: 'Gerenciar Oportunidades', icon: Search, path: '/coordinator/opportunities' },
   { title: 'Configurações do Curso', icon: Settings, path: '/coordinator/settings' },

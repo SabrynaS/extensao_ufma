@@ -20,6 +20,7 @@ import CoordinatorSettings from "./pages/coordinator/Settings";
 import CoordinatorAlerts from "./pages/coordinator/Alerts";
 import CreateEvent from "./pages/events/CreateEvent";
 import NotFound from "./pages/NotFound";
+import GroupsManagement from "./pages/coordinator/GroupsManagement";
 
 const queryClient = new QueryClient();
 
@@ -52,6 +53,7 @@ function AppRoutes() {
       <Route path="/coordinator/opportunities" element={<ProtectedRoute><CoordinatorOpportunities /></ProtectedRoute>} />
       <Route path="/coordinator/settings" element={<ProtectedRoute><CoordinatorSettings /></ProtectedRoute>} />
       <Route path="/coordinator/alerts" element={<ProtectedRoute><CoordinatorAlerts /></ProtectedRoute>} />
+      <Route path="/coordinator/groups" element={<ProtectedRoute><GroupsManagement /></ProtectedRoute>} />
       
       {/* Events Routes */}
       <Route path="/events" element={<ProtectedRoute><StudentEvents /></ProtectedRoute>} />

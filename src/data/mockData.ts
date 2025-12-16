@@ -10,6 +10,28 @@ export interface User {
   avatar?: string;
 }
 
+export type AllocationRule = 'flexible' | 'modular';
+
+export interface PPCVersion {
+  id: string;
+  version: string;
+  totalHours: number;
+  allocationRule: AllocationRule;
+  documentUrl?: string;
+  author: string;
+  effectiveDate: string;
+  createdAt: string;
+  isActive: boolean;
+}
+
+export interface ModularCategory {
+  id: string;
+  name: string;
+  minPercentage: number;
+  maxPercentage: number;
+}
+
+
 export interface Solicitation {
   id: string;
   activity: string;
@@ -77,6 +99,37 @@ export interface Certificate {
   validationCode: string;
 }
 
+export interface GroupMember {
+  id: string;
+  name: string;
+  email: string;
+  role: 'coordinator' | 'member';
+}
+
+export interface StudentGroup {
+  id: string;
+  name: string;
+  description: string;
+  email: string;
+  type: 'diretorio_academico' | 'liga' | 'atletica' | 'outros';
+  responsibleTeacher: {
+    id: string;
+    name: string;
+  };
+  coordinator?: GroupMember;
+  members: GroupMember[];
+  status: 'active' | 'inactive';
+  createdAt: string;
+  updatedAt: string;
+}
+
+export const groupTypeLabels: Record<StudentGroup['type'], string> = {
+  diretorio_academico: 'Diretório Acadêmico',
+  liga: 'Liga',
+  atletica: 'Atlética',
+  outros: 'Outros',
+};
+
 export const users = {
   student: {
     id: '1',
@@ -131,6 +184,99 @@ export const users = {
 
 
 }
+
+export const mockGroups: StudentGroup[] = [
+  {
+    id: '1',
+    name: 'Diretório Acadêmico de Medicina',
+    description: 'Representação estudantil do curso de Medicina, promovendo eventos acadêmicos e culturais.',
+    email: 'da.medicina@universidade.edu.br',
+    type: 'diretorio_academico',
+    responsibleTeacher: {
+      id: 't1',
+      name: 'Dr. Carlos Eduardo Silva',
+    },
+    coordinator: {
+      id: 's1',
+      name: 'Ana Paula Santos',
+      email: 'ana.santos@aluno.edu.br',
+      role: 'coordinator',
+    },
+    members: [
+      { id: 's1', name: 'Ana Paula Santos', email: 'ana.santos@aluno.edu.br', role: 'coordinator' },
+      { id: 's2', name: 'Lucas Oliveira', email: 'lucas.oliveira@aluno.edu.br', role: 'member' },
+      { id: 's3', name: 'Maria Clara', email: 'maria.clara@aluno.edu.br', role: 'member' },
+    ],
+    status: 'active',
+    createdAt: '2024-01-15',
+    updatedAt: '2024-12-01',
+  },
+  {
+    id: '2',
+    name: 'Liga de Cardiologia',
+    description: 'Liga acadêmica dedicada ao estudo e pesquisa em cardiologia.',
+    email: 'liga.cardio@universidade.edu.br',
+    type: 'liga',
+    responsibleTeacher: {
+      id: 't2',
+      name: 'Dra. Fernanda Lima',
+    },
+    coordinator: {
+      id: 's4',
+      name: 'Pedro Henrique Costa',
+      email: 'pedro.costa@aluno.edu.br',
+      role: 'coordinator',
+    },
+    members: [
+      { id: 's4', name: 'Pedro Henrique Costa', email: 'pedro.costa@aluno.edu.br', role: 'coordinator' },
+      { id: 's5', name: 'Juliana Mendes', email: 'juliana.mendes@aluno.edu.br', role: 'member' },
+    ],
+    status: 'active',
+    createdAt: '2024-03-20',
+    updatedAt: '2024-11-15',
+  },
+  {
+    id: '3',
+    name: 'Atlética Medicina',
+    description: 'Associação atlética responsável pelo esporte universitário do curso de Medicina.',
+    email: 'atletica.med@universidade.edu.br',
+    type: 'atletica',
+    responsibleTeacher: {
+      id: 't3',
+      name: 'Prof. Roberto Campos',
+    },
+    coordinator: {
+      id: 's6',
+      name: 'Gabriel Souza',
+      email: 'gabriel.souza@aluno.edu.br',
+      role: 'coordinator',
+    },
+    members: [
+      { id: 's6', name: 'Gabriel Souza', email: 'gabriel.souza@aluno.edu.br', role: 'coordinator' },
+      { id: 's7', name: 'Beatriz Almeida', email: 'beatriz.almeida@aluno.edu.br', role: 'member' },
+      { id: 's8', name: 'Thiago Martins', email: 'thiago.martins@aluno.edu.br', role: 'member' },
+      { id: 's9', name: 'Carolina Pereira', email: 'carolina.pereira@aluno.edu.br', role: 'member' },
+    ],
+    status: 'active',
+    createdAt: '2023-08-10',
+    updatedAt: '2024-10-20',
+  },
+  {
+    id: '4',
+    name: 'Liga de Oncologia',
+    description: 'Liga acadêmica focada em estudos oncológicos e cuidados paliativos.',
+    email: 'liga.onco@universidade.edu.br',
+    type: 'liga',
+    responsibleTeacher: {
+      id: 't4',
+      name: 'Dr. Marcos Antônio Reis',
+    },
+    members: [],
+    status: 'inactive',
+    createdAt: '2022-05-01',
+    updatedAt: '2024-06-30',
+  },
+];
 
 // Student progress data
 export const studentProgress = {
@@ -231,6 +377,27 @@ export const solicitations: Solicitation[] = [
     studentMatricula: '2021001234',
     deadlineDays: 4,
   },
+];
+
+export const mockTeachers = [
+  { id: 't1', name: 'Dr. Carlos Eduardo Silva' },
+  { id: 't2', name: 'Dra. Fernanda Lima' },
+  { id: 't3', name: 'Prof. Roberto Campos' },
+  { id: 't4', name: 'Dr. Marcos Antônio Reis' },
+  { id: 't5', name: 'Dra. Patricia Nogueira' },
+];
+
+export const mockStudents = [
+  { id: 's1', name: 'Ana Paula Santos', email: 'ana.santos@aluno.edu.br' },
+  { id: 's2', name: 'Lucas Oliveira', email: 'lucas.oliveira@aluno.edu.br' },
+  { id: 's3', name: 'Maria Clara', email: 'maria.clara@aluno.edu.br' },
+  { id: 's4', name: 'Pedro Henrique Costa', email: 'pedro.costa@aluno.edu.br' },
+  { id: 's5', name: 'Juliana Mendes', email: 'juliana.mendes@aluno.edu.br' },
+  { id: 's6', name: 'Gabriel Souza', email: 'gabriel.souza@aluno.edu.br' },
+  { id: 's7', name: 'Beatriz Almeida', email: 'beatriz.almeida@aluno.edu.br' },
+  { id: 's8', name: 'Thiago Martins', email: 'thiago.martins@aluno.edu.br' },
+  { id: 's9', name: 'Carolina Pereira', email: 'carolina.pereira@aluno.edu.br' },
+  { id: 's10', name: 'Rafael Gomes', email: 'rafael.gomes@aluno.edu.br' },
 ];
 
 // Mock opportunities
@@ -490,4 +657,57 @@ export const activityTypes = [
   'Voluntariado',
   'Pesquisa',
   'Outro',
+];
+
+export const mockPPCVersions: PPCVersion[] = [
+  {
+    id: '1',
+    version: 'PPC 2024.1',
+    totalHours: 300,
+    allocationRule: 'flexible',
+    documentUrl: '/docs/ppc-2024-1.pdf',
+    author: 'Prof. Dr. Roberto Lima',
+    effectiveDate: '2024-01-15',
+    createdAt: '2024-01-10T10:30:00Z',
+    isActive: true,
+  },
+  {
+    id: '2',
+    version: 'PPC 2023.2',
+    totalHours: 280,
+    allocationRule: 'modular',
+    documentUrl: '/docs/ppc-2023-2.pdf',
+    author: 'Prof. Dra. Maria Santos',
+    effectiveDate: '2023-08-01',
+    createdAt: '2023-07-25T14:00:00Z',
+    isActive: false,
+  },
+  {
+    id: '3',
+    version: 'PPC 2023.1',
+    totalHours: 250,
+    allocationRule: 'flexible',
+    documentUrl: '/docs/ppc-2023-1.pdf',
+    author: 'Prof. Dr. Carlos Mendes',
+    effectiveDate: '2023-02-01',
+    createdAt: '2023-01-20T09:15:00Z',
+    isActive: false,
+  },
+  {
+    id: '4',
+    version: 'PPC 2022.1',
+    totalHours: 240,
+    allocationRule: 'modular',
+    author: 'Prof. Dr. Roberto Lima',
+    effectiveDate: '2022-03-01',
+    createdAt: '2022-02-15T11:00:00Z',
+    isActive: false,
+  },
+];
+
+export const mockAuthors = [
+  'Prof. Dr. Roberto Lima',
+  'Prof. Dra. Maria Santos',
+  'Prof. Dr. Carlos Mendes',
+  'Prof. Dra. Ana Paula Silva',
 ];
