@@ -1,64 +1,99 @@
-import { useState } from 'react';
-import { AppLayout } from '@/components/layout/AppLayout';
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Badge } from '@/components/ui/badge';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { 
-  Plus,
-  Search,
-  Download,
-  Eye,
-  Filter
-} from 'lucide-react';
-import { solicitations } from '@/data/mockData';
-import { NewSolicitationModal } from '@/components/student/NewSolicitationModal';
-import { SolicitationDetailsModal } from '@/components/student/SolicitationDetailsModal';
+import { useState } from "react";
+import { AppLayout } from "@/components/layout/AppLayout";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Plus, Search, Download, Eye, Filter } from "lucide-react";
+import { solicitations } from "@/data/mockData";
+import { NewSolicitationModal } from "@/components/student/NewSolicitationModal";
+import { SolicitationDetailsModal } from "@/components/student/SolicitationDetailsModal";
+import { useAlerts } from "@/hooks/useAlerts";
 
 export default function StudentRequests() {
+  const { addAlert } = useAlerts();
   const [showNewSolicitation, setShowNewSolicitation] = useState(false);
-  const [selectedSolicitation, setSelectedSolicitation] = useState<typeof solicitations[0] | null>(null);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [activeTab, setActiveTab] = useState('all');
+  const [selectedSolicitation, setSelectedSolicitation] = useState<
+    (typeof solicitations)[0] | null
+  >(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [activeTab, setActiveTab] = useState("all");
 
-  const mySolicitations = solicitations.filter(s => s.studentId === '1');
+  const mySolicitations = solicitations.filter((s) => s.studentId === "1");
 
-  const filteredSolicitations = mySolicitations.filter(s => {
-    const matchesSearch = s.activity.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesTab = activeTab === 'all' || 
-      (activeTab === 'pending' && (s.status === 'Pendente' || s.status === 'Em Análise')) ||
-      (activeTab === 'approved' && s.status === 'Aprovado') ||
-      (activeTab === 'rejected' && s.status === 'Rejeitado');
+  const filteredSolicitations = mySolicitations.filter((s) => {
+    const matchesSearch = s.activity
+      .toLowerCase()
+      .includes(searchQuery.toLowerCase());
+    const matchesTab =
+      activeTab === "all" ||
+      (activeTab === "pending" &&
+        (s.status === "Pendente" || s.status === "Em Análise")) ||
+      (activeTab === "approved" && s.status === "Aprovado") ||
+      (activeTab === "rejected" && s.status === "Rejeitado");
     return matchesSearch && matchesTab;
   });
 
   const getStatusBadge = (status: string) => {
     switch (status) {
-      case 'Aprovado':
-        return <Badge className="bg-success/10 text-success border-0">Aprovado</Badge>;
-      case 'Em Análise':
-        return <Badge className="bg-warning/10 text-warning border-0">Em Análise</Badge>;
-      case 'Pendente':
-        return <Badge className="bg-warning/10 text-warning border-0">Pendente</Badge>;
-      case 'Rejeitado':
-        return <Badge className="bg-destructive/10 text-destructive border-0">Rejeitado</Badge>;
-      case 'Em Ajuste':
-        return <Badge className="bg-warning/10 text-warning border-0">Em Ajuste</Badge>;
+      case "Aprovado":
+        return (
+          <Badge className="bg-success/10 text-success border-0">
+            Aprovado
+          </Badge>
+        );
+      case "Em Análise":
+        return (
+          <Badge className="bg-warning/10 text-warning border-0">
+            Em Análise
+          </Badge>
+        );
+      case "Pendente":
+        return (
+          <Badge className="bg-warning/10 text-warning border-0">
+            Pendente
+          </Badge>
+        );
+      case "Rejeitado":
+        return (
+          <Badge className="bg-destructive/10 text-destructive border-0">
+            Rejeitado
+          </Badge>
+        );
+      case "Em Ajuste":
+        return (
+          <Badge className="bg-warning/10 text-warning border-0">
+            Em Ajuste
+          </Badge>
+        );
       default:
         return <Badge variant="outline">{status}</Badge>;
     }
   };
 
   return (
-    <AppLayout breadcrumb={['Início', 'Minhas Solicitações']}>
+    <AppLayout breadcrumb={["Início", "Minhas Solicitações"]}>
       <div className="space-y-6">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-bold text-primary">Minhas Solicitações</h1>
-            <p className="text-muted-foreground">Gerencie suas atividades submetidas</p>
+            <h1 className="text-2xl font-bold text-primary">
+              Minhas Solicitações
+            </h1>
+            <p className="text-muted-foreground">
+              Gerencie suas atividades submetidas
+            </p>
           </div>
-          <Button onClick={() => setShowNewSolicitation(true)}>
+          <Button
+            onClick={() => {
+              addAlert(
+                "info",
+                "Nova solicitação",
+                "Abrindo formulário para nova solicitação."
+              );
+              setShowNewSolicitation(true);
+            }}
+          >
             <Plus className="w-4 h-4 mr-2" />
             Nova Solicitação
           </Button>
@@ -81,17 +116,40 @@ export default function StudentRequests() {
               </Button>
             </div>
 
-            <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-4">
+            <Tabs
+              value={activeTab}
+              onValueChange={setActiveTab}
+              className="mb-4"
+            >
               <TabsList>
-                <TabsTrigger value="all">Todas ({mySolicitations.length})</TabsTrigger>
+                <TabsTrigger value="all">
+                  Todas ({mySolicitations.length})
+                </TabsTrigger>
                 <TabsTrigger value="pending">
-                  Pendentes ({mySolicitations.filter(s => s.status === 'Pendente' || s.status === 'Em Análise').length})
+                  Pendentes (
+                  {
+                    mySolicitations.filter(
+                      (s) =>
+                        s.status === "Pendente" || s.status === "Em Análise"
+                    ).length
+                  }
+                  )
                 </TabsTrigger>
                 <TabsTrigger value="approved">
-                  Aprovadas ({mySolicitations.filter(s => s.status === 'Aprovado').length})
+                  Aprovadas (
+                  {
+                    mySolicitations.filter((s) => s.status === "Aprovado")
+                      .length
+                  }
+                  )
                 </TabsTrigger>
                 <TabsTrigger value="rejected">
-                  Rejeitadas ({mySolicitations.filter(s => s.status === 'Rejeitado').length})
+                  Rejeitadas (
+                  {
+                    mySolicitations.filter((s) => s.status === "Rejeitado")
+                      .length
+                  }
+                  )
                 </TabsTrigger>
               </TabsList>
             </Tabs>
@@ -100,35 +158,79 @@ export default function StudentRequests() {
               <table className="w-full">
                 <thead>
                   <tr className="border-b">
-                    <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">Atividade</th>
-                    <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">Tipo</th>
-                    <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">Carga Horária</th>
-                    <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">Data Envio</th>
-                    <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">Status</th>
-                    <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">Ações</th>
+                    <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">
+                      Atividade
+                    </th>
+                    <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">
+                      Tipo
+                    </th>
+                    <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">
+                      Carga Horária
+                    </th>
+                    <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">
+                      Data Envio
+                    </th>
+                    <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">
+                      Status
+                    </th>
+                    <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">
+                      Ações
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
                   {filteredSolicitations.map((solicitation) => (
-                    <tr key={solicitation.id} className="border-b last:border-0 hover:bg-muted/50">
-                      <td className="py-3 px-4 text-sm">{solicitation.activity}</td>
-                      <td className="py-3 px-4 text-sm text-muted-foreground">{solicitation.type}</td>
-                      <td className="py-3 px-4 text-sm">{solicitation.hours}h</td>
-                      <td className="py-3 px-4 text-sm text-muted-foreground">{solicitation.submitDate}</td>
-                      <td className="py-3 px-4">{getStatusBadge(solicitation.status)}</td>
+                    <tr
+                      key={solicitation.id}
+                      className="border-b last:border-0 hover:bg-muted/50"
+                    >
+                      <td className="py-3 px-4 text-sm">
+                        {solicitation.activity}
+                      </td>
+                      <td className="py-3 px-4 text-sm text-muted-foreground">
+                        {solicitation.type}
+                      </td>
+                      <td className="py-3 px-4 text-sm">
+                        {solicitation.hours}h
+                      </td>
+                      <td className="py-3 px-4 text-sm text-muted-foreground">
+                        {solicitation.submitDate}
+                      </td>
+                      <td className="py-3 px-4">
+                        {getStatusBadge(solicitation.status)}
+                      </td>
                       <td className="py-3 px-4">
                         <div className="flex gap-2">
-                          {solicitation.status === 'Aprovado' && (
-                            <Button variant="outline" size="sm" className="gap-1">
+                          {solicitation.status === "Aprovado" && (
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              className="gap-1"
+                              onClick={() => {
+                                addAlert(
+                                  "success",
+                                  "Download iniciado",
+                                  "O certificado está sendo baixado."
+                                );
+                                // Aqui faria o download real
+                              }}
+                            >
                               <Download className="w-3 h-3" />
                               Certificado
                             </Button>
                           )}
-                          <Button 
-                            variant="outline" 
-                            size="sm" 
+                          <Button
+                            variant="outline"
+                            size="sm"
                             className="gap-1"
-                            onClick={() => setSelectedSolicitation(solicitation)}
+                            onClick={() => {
+                              addAlert(
+                                "info",
+                                "Detalhes carregados",
+                                "Visualizando detalhes da solicitação."
+                              );
+                              setSelectedSolicitation(solicitation);
+                            }}
                           >
                             <Eye className="w-3 h-3" />
                             Detalhes
@@ -150,9 +252,9 @@ export default function StudentRequests() {
         </Card>
       </div>
 
-      <NewSolicitationModal 
-        open={showNewSolicitation} 
-        onOpenChange={setShowNewSolicitation} 
+      <NewSolicitationModal
+        open={showNewSolicitation}
+        onOpenChange={setShowNewSolicitation}
       />
 
       <SolicitationDetailsModal

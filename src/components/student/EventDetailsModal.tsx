@@ -3,12 +3,12 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from '@/components/ui/dialog';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Clock, Users, Calendar, MapPin } from 'lucide-react';
-import { Opportunity } from '@/data/mockData';
-import { useToast } from '@/hooks/use-toast';
+} from "@/components/ui/dialog";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Clock, Users, Calendar, MapPin } from "lucide-react";
+import { Opportunity } from "@/data/mockData";
+import { useAlerts } from "@/hooks/useAlerts";
 
 interface EventDetailsModalProps {
   event: Opportunity | null;
@@ -16,24 +16,49 @@ interface EventDetailsModalProps {
   onOpenChange: (open: boolean) => void;
 }
 
-export function EventDetailsModal({ event, open, onOpenChange }: EventDetailsModalProps) {
-  const { toast } = useToast();
+export function EventDetailsModal({
+  event,
+  open,
+  onOpenChange,
+}: EventDetailsModalProps) {
+  const { addAlert } = useAlerts();
 
   if (!event) return null;
 
   const handleEnroll = () => {
-    toast({
-      title: 'Inscrição realizada!',
-      description: `Você foi inscrito em "${event.title}" com sucesso.`,
-    });
+    // Simular possível erro de inscrição (10% de chance)
+    const hasError = Math.random() < 0.1;
+
+    if (hasError) {
+      addAlert(
+        "error",
+        "Erro na inscrição",
+        "Ocorreu um erro ao processar sua inscrição. Tente novamente."
+      );
+      return;
+    }
+
+    addAlert(
+      "success",
+      "Inscrição realizada!",
+      `Você foi inscrito em "${event.title}" com sucesso.`
+    );
     onOpenChange(false);
   };
 
   const getStatusBadge = (status: string) => {
-    if (status === 'Inscrições Abertas') {
-      return <Badge className="bg-success/10 text-success border-0">Inscrições Abertas</Badge>;
+    if (status === "Inscrições Abertas") {
+      return (
+        <Badge className="bg-success/10 text-success border-0">
+          Inscrições Abertas
+        </Badge>
+      );
     }
-    return <Badge className="bg-destructive/10 text-destructive border-0">Vagas Esgotadas</Badge>;
+    return (
+      <Badge className="bg-destructive/10 text-destructive border-0">
+        Vagas Esgotadas
+      </Badge>
+    );
   };
 
   return (
@@ -41,7 +66,9 @@ export function EventDetailsModal({ event, open, onOpenChange }: EventDetailsMod
       <DialogContent className="max-w-lg">
         <DialogHeader>
           <div className="flex items-center gap-2 mb-2">
-            <Badge className="bg-primary text-primary-foreground">{event.type}</Badge>
+            <Badge className="bg-primary text-primary-foreground">
+              {event.type}
+            </Badge>
             {getStatusBadge(event.status)}
           </div>
           <DialogTitle className="text-xl">{event.title}</DialogTitle>
@@ -62,7 +89,9 @@ export function EventDetailsModal({ event, open, onOpenChange }: EventDetailsMod
               <Users className="w-4 h-4 text-muted-foreground" />
               <div>
                 <p className="text-xs text-muted-foreground">Vagas</p>
-                <p className="font-medium">{event.filledSlots}/{event.slots} inscritos</p>
+                <p className="font-medium">
+                  {event.filledSlots}/{event.slots} inscritos
+                </p>
               </div>
             </div>
             <div className="flex items-center gap-2">
@@ -84,22 +113,28 @@ export function EventDetailsModal({ event, open, onOpenChange }: EventDetailsMod
           <div>
             <h4 className="font-medium mb-2">Validação</h4>
             <p className="text-sm text-muted-foreground">
-              {event.validation === 'Automática' 
-                ? 'As horas serão validadas automaticamente após a conclusão da atividade.'
-                : 'As horas precisarão ser validadas manualmente pela coordenação após a conclusão.'}
+              {event.validation === "Automática"
+                ? "As horas serão validadas automaticamente após a conclusão da atividade."
+                : "As horas precisarão ser validadas manualmente pela coordenação após a conclusão."}
             </p>
           </div>
 
           <div className="flex gap-3 pt-2">
-            <Button variant="outline" className="flex-1" onClick={() => onOpenChange(false)}>
+            <Button
+              variant="outline"
+              className="flex-1"
+              onClick={() => onOpenChange(false)}
+            >
               Fechar
             </Button>
-            <Button 
-              className="flex-1" 
-              disabled={event.status === 'Vagas Esgotadas'}
+            <Button
+              className="flex-1"
+              disabled={event.status === "Vagas Esgotadas"}
               onClick={handleEnroll}
             >
-              {event.status === 'Vagas Esgotadas' ? 'Vagas Esgotadas' : 'Inscrever-se'}
+              {event.status === "Vagas Esgotadas"
+                ? "Vagas Esgotadas"
+                : "Inscrever-se"}
             </Button>
           </div>
         </div>
