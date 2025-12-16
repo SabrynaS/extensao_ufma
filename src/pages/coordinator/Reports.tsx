@@ -78,7 +78,7 @@ export default function CoordinatorReports() {
               <TabsList><TabsTrigger value="conclusion">Relatório de Conclusão</TabsTrigger><TabsTrigger value="distribution">Distribuição por Tipo</TabsTrigger><TabsTrigger value="evolution">Evolução Semestral</TabsTrigger><TabsTrigger value="rankings">Rankings</TabsTrigger></TabsList>
               <TabsContent value="conclusion" className="mt-6">
                 <div className="flex items-center justify-between mb-4">
-                  <div><h3 className="font-semibold">Relatório Formal de Conclusão de Carga Horária (RF034)</h3><p className="text-sm text-muted-foreground">Alunos que completaram a carga horária mínima de extensão no semestre 2025.2</p></div>
+                  <div><p className="text-sm text-muted-foreground">Alunos que completaram a carga horária mínima de extensão no semestre 2025.2</p></div>
                   <div className="flex gap-2"><Button variant="outline"><Download className="w-4 h-4 mr-2" />Exportar PDF</Button><Button variant="outline"><Download className="w-4 h-4 mr-2" />Excel</Button></div>
                 </div>
                 <div className="p-3 bg-warning/10 border border-warning/20 rounded-lg mb-4"><p className="text-sm"><strong>Finalidade:</strong> Este relatório serve de base para o lançamento oficial da UCE (Unidade Curricular de Extensão) no sistema acadêmico.</p></div>
