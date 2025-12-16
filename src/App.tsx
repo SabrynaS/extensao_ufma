@@ -21,6 +21,7 @@ import CoordinatorAlerts from "./pages/coordinator/Alerts";
 import CreateEvent from "./pages/events/CreateEvent";
 import NotFound from "./pages/NotFound";
 import GroupsManagement from "./pages/coordinator/GroupsManagement";
+import GroupMemberRoles from "./pages/teacher/GroupMembersRoles";
 
 const queryClient = new QueryClient();
 
@@ -58,6 +59,9 @@ function AppRoutes() {
       {/* Events Routes */}
       <Route path="/events" element={<ProtectedRoute><StudentEvents /></ProtectedRoute>} />
       <Route path="/events/create" element={<ProtectedRoute><CreateEvent /></ProtectedRoute>} />
+
+      {/* Teacher Routes */}
+      <Route path="/teacher/groups" element={<ProtectedRoute><GroupMemberRoles /></ProtectedRoute>} />
 
       <Route path="*" element={<NotFound />} />
     </Routes>

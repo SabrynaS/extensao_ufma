@@ -54,6 +54,14 @@ const coordinatorNavItems: NavItem[] = [
   { title: 'Central de Alertas', icon: Bell, path: '/coordinator/alerts', badge: 1 },
 ];
 
+const teacherNavItems: NavItem[] = [
+  { title: 'Painel Geral', icon: LayoutDashboard, path: '/teacher' },
+  { title: 'Meus Grupos', icon: Users, path: '/teacher/groups' },
+  { title: 'Minhas Oportunidades', icon: Search, path: '/teacher/opportunities' },
+  { title: 'Relatórios', icon: BarChart3, path: '/teacher/reports' },
+  { title: 'Perfil', icon: User, path: '/teacher/profile' },
+];
+
 const roleConfig = {
   coordinator: {
     navItems: coordinatorNavItems,
@@ -66,7 +74,7 @@ const roleConfig = {
   },
 
   teacher: {
-    navItems: coordinatorNavItems,
+    navItems: teacherNavItems,
     panelTitle: "Painel do Docente",
   },
 

@@ -10,6 +10,15 @@ export interface User {
   avatar?: string;
 }
 
+export type GroupMemberRole = 'diretor' | 'vice' | 'tesoureiro' | 'membro';
+
+export const groupMemberRoleLabels: Record<GroupMemberRole, string> = {
+  diretor: 'Diretor',
+  vice: 'Vice-Diretor',
+  tesoureiro: 'Tesoureiro',
+  membro: 'Membro',
+};
+
 export type AllocationRule = 'flexible' | 'modular';
 
 export interface PPCVersion {
@@ -103,7 +112,20 @@ export interface GroupMember {
   id: string;
   name: string;
   email: string;
-  role: 'coordinator' | 'member';
+  matricula: string;
+  role: GroupMemberRole;
+}
+
+export interface RoleHistoryEntry {
+  id: string;
+  groupId: string;
+  memberId: string;
+  memberName: string;
+  memberMatricula: string;
+  previousRole: GroupMemberRole | null;
+  newRole: GroupMemberRole;
+  changedBy: string;
+  changedAt: string;
 }
 
 export interface StudentGroup {
@@ -115,6 +137,7 @@ export interface StudentGroup {
   responsibleTeacher: {
     id: string;
     name: string;
+    email: string;
   };
   coordinator?: GroupMember;
   members: GroupMember[];
@@ -172,24 +195,26 @@ export const users = {
 export const mockGroups: StudentGroup[] = [
   {
     id: '1',
-    name: 'Diretório Acadêmico de Medicina',
-    description: 'Representação estudantil do curso de Medicina, promovendo eventos acadêmicos e culturais.',
-    email: 'da.medicina@universidade.edu.br',
+    name: 'Diretório Acadêmico de Ciência da Computação',
+    description: 'Representação estudantil do curso de Ciência da Computação, promovendo eventos acadêmicos e culturais.',
+    email: 'da.computacao@universidade.edu.br',
     type: 'diretorio_academico',
     responsibleTeacher: {
       id: 't1',
-      name: 'Dr. Carlos Eduardo Silva',
+      name: 'Dr. João Silva',
+      email: 'joao.silva@ufma.br'
     },
     coordinator: {
       id: 's1',
       name: 'Ana Paula Santos',
-      email: 'ana.santos@aluno.edu.br',
-      role: 'coordinator',
+      matricula: '2021001234',
+      email: 'ana.santos@discente.ufma.br',
+      role: 'diretor',
     },
     members: [
-      { id: 's1', name: 'Ana Paula Santos', email: 'ana.santos@aluno.edu.br', role: 'coordinator' },
-      { id: 's2', name: 'Lucas Oliveira', email: 'lucas.oliveira@aluno.edu.br', role: 'member' },
-      { id: 's3', name: 'Maria Clara', email: 'maria.clara@aluno.edu.br', role: 'member' },
+      { id: 's1', name: 'Ana Paula Santos', email: 'ana.santos@discente.ufma.br', role: 'diretor', matricula: '2021001234' },
+      { id: 's2', name: 'Lucas Oliveira', email: 'lucas.oliveira@discente.ufma.br', role: 'membro', matricula: '2021005678' },
+      { id: 's3', name: 'Maria Clara', email: 'maria.clara@discente.ufma.br', role: 'membro', matricula: '2021009012' },
     ],
     status: 'active',
     createdAt: '2024-01-15',
@@ -197,23 +222,25 @@ export const mockGroups: StudentGroup[] = [
   },
   {
     id: '2',
-    name: 'Liga de Cardiologia',
-    description: 'Liga acadêmica dedicada ao estudo e pesquisa em cardiologia.',
+    name: 'Liga de Desenvolvimento Cardiológico',
+    description: 'Liga acadêmica dedicada ao desenvolvimento de sistemas para ajudar no tratamento de doenças cardíacas.',
     email: 'liga.cardio@universidade.edu.br',
     type: 'liga',
     responsibleTeacher: {
       id: 't2',
       name: 'Dra. Fernanda Lima',
+      email: 'fernanda.lima@ufma.br'
     },
     coordinator: {
       id: 's4',
       name: 'Pedro Henrique Costa',
-      email: 'pedro.costa@aluno.edu.br',
-      role: 'coordinator',
+      email: 'pedro.costa@aluno.ufma.br',
+      matricula: '2022005678',
+      role: 'diretor',
     },
     members: [
-      { id: 's4', name: 'Pedro Henrique Costa', email: 'pedro.costa@aluno.edu.br', role: 'coordinator' },
-      { id: 's5', name: 'Juliana Mendes', email: 'juliana.mendes@aluno.edu.br', role: 'member' },
+      { id: 's4', name: 'Pedro Henrique Costa', email: 'pedro.costa@aluno.ufma.br', role: 'diretor', matricula: '2022005678' },
+      { id: 's5', name: 'Juliana Mendes', email: 'juliana.mendes@aluno.ufma.br', role: 'membro', matricula: '2022009012' },
     ],
     status: 'active',
     createdAt: '2024-03-20',
@@ -221,25 +248,27 @@ export const mockGroups: StudentGroup[] = [
   },
   {
     id: '3',
-    name: 'Atlética Medicina',
-    description: 'Associação atlética responsável pelo esporte universitário do curso de Medicina.',
-    email: 'atletica.med@universidade.edu.br',
+    name: 'Atlética LORD',
+    description: 'Associação atlética responsável pelo esporte universitário do curso de Ciência da Computação.',
+    email: 'atletica.lord@ufma.br',
     type: 'atletica',
     responsibleTeacher: {
       id: 't3',
       name: 'Prof. Roberto Campos',
+      email: 'roberto.campos@ufma.br'
     },
     coordinator: {
       id: 's6',
       name: 'Gabriel Souza',
-      email: 'gabriel.souza@aluno.edu.br',
-      role: 'coordinator',
+      email: 'gabriel.souza@discente.ufma.br',
+      matricula: '2022012345',
+      role: 'diretor',
     },
     members: [
-      { id: 's6', name: 'Gabriel Souza', email: 'gabriel.souza@aluno.edu.br', role: 'coordinator' },
-      { id: 's7', name: 'Beatriz Almeida', email: 'beatriz.almeida@aluno.edu.br', role: 'member' },
-      { id: 's8', name: 'Thiago Martins', email: 'thiago.martins@aluno.edu.br', role: 'member' },
-      { id: 's9', name: 'Carolina Pereira', email: 'carolina.pereira@aluno.edu.br', role: 'member' },
+      { id: 's6', name: 'Gabriel Souza', email: 'gabriel.souza@discente.ufma.br', role: 'diretor', matricula: '2022012345' },
+      { id: 's7', name: 'Beatriz Almeida', email: 'beatriz.almeida@discente.ufma.br', role: 'membro', matricula: '2022016789' },
+      { id: 's8', name: 'Thiago Martins', email: 'thiago.martins@discente.ufma.br', role: 'membro', matricula: '2022023456' },
+      { id: 's9', name: 'Carolina Pereira', email: 'carolina.pereira@discente.ufma.br', role: 'membro', matricula: '2022027890' },
     ],
     status: 'active',
     createdAt: '2023-08-10',
@@ -249,11 +278,12 @@ export const mockGroups: StudentGroup[] = [
     id: '4',
     name: 'Liga de Oncologia',
     description: 'Liga acadêmica focada em estudos oncológicos e cuidados paliativos.',
-    email: 'liga.onco@universidade.edu.br',
+    email: 'liga.onco@ufma.br',
     type: 'liga',
     responsibleTeacher: {
       id: 't4',
       name: 'Dr. Marcos Antônio Reis',
+      email: 'marcos.reis@ufma.br'
     },
     members: [],
     status: 'inactive',
@@ -372,16 +402,16 @@ export const mockTeachers = [
 ];
 
 export const mockStudents = [
-  { id: 's1', name: 'Ana Paula Santos', email: 'ana.santos@aluno.edu.br' },
-  { id: 's2', name: 'Lucas Oliveira', email: 'lucas.oliveira@aluno.edu.br' },
-  { id: 's3', name: 'Maria Clara', email: 'maria.clara@aluno.edu.br' },
-  { id: 's4', name: 'Pedro Henrique Costa', email: 'pedro.costa@aluno.edu.br' },
-  { id: 's5', name: 'Juliana Mendes', email: 'juliana.mendes@aluno.edu.br' },
-  { id: 's6', name: 'Gabriel Souza', email: 'gabriel.souza@aluno.edu.br' },
-  { id: 's7', name: 'Beatriz Almeida', email: 'beatriz.almeida@aluno.edu.br' },
-  { id: 's8', name: 'Thiago Martins', email: 'thiago.martins@aluno.edu.br' },
-  { id: 's9', name: 'Carolina Pereira', email: 'carolina.pereira@aluno.edu.br' },
-  { id: 's10', name: 'Rafael Gomes', email: 'rafael.gomes@aluno.edu.br' },
+  { id: 's1', name: 'Ana Paula Santos', email: 'ana.santos@ufma.br' },
+  { id: 's2', name: 'Lucas Oliveira', email: 'lucas.oliveira@ufma.br' },
+  { id: 's3', name: 'Maria Clara', email: 'maria.clara@ufma.br' },
+  { id: 's4', name: 'Pedro Henrique Costa', email: 'pedro.costa@ufma.br' },
+  { id: 's5', name: 'Juliana Mendes', email: 'juliana.mendes@ufma.br' },
+  { id: 's6', name: 'Gabriel Souza', email: 'gabriel.souza@ufma.br' },
+  { id: 's7', name: 'Beatriz Almeida', email: 'beatriz.almeida@ufma.br' },
+  { id: 's8', name: 'Thiago Martins', email: 'thiago.martins@ufma.br' },
+  { id: 's9', name: 'Carolina Pereira', email: 'carolina.pereira@ufma.br' },
+  { id: 's10', name: 'Rafael Gomes', email: 'rafael.gomes@ufma.br' },
 ];
 
 // Mock opportunities
@@ -694,4 +724,73 @@ export const mockAuthors = [
   'Prof. Dra. Maria Santos',
   'Prof. Dr. Carlos Mendes',
   'Prof. Dra. Ana Paula Silva',
+];
+
+export const mockRoleHistory: RoleHistoryEntry[] = [
+  {
+    id: 'h1',
+    groupId: '1',
+    memberId: 's1',
+    memberName: 'Ana Paula Santos',
+    memberMatricula: '2021001234',
+    previousRole: 'vice',
+    newRole: 'diretor',
+    changedBy: 'Dr. João Silva',
+    changedAt: '2024-11-15T10:30:00Z',
+  },
+  {
+    id: 'h2',
+    groupId: '1',
+    memberId: 's2',
+    memberName: 'Lucas Oliveira',
+    memberMatricula: '2021005678',
+    previousRole: 'membro',
+    newRole: 'vice',
+    changedBy: 'Dr. João Silva',
+    changedAt: '2024-11-15T10:35:00Z',
+  },
+  {
+    id: 'h3',
+    groupId: '1',
+    memberId: 's3',
+    memberName: 'Maria Clara',
+    memberMatricula: '2022003456',
+    previousRole: null,
+    newRole: 'tesoureiro',
+    changedBy: 'Dr. João Silva',
+    changedAt: '2024-10-01T14:00:00Z',
+  },
+  {
+    id: 'h4',
+    groupId: '1',
+    memberId: 's1',
+    memberName: 'Ana Paula Santos',
+    memberMatricula: '2021001234',
+    previousRole: null,
+    newRole: 'vice',
+    changedBy: 'Dr. João Silva',
+    changedAt: '2024-03-10T09:00:00Z',
+  },
+  {
+    id: 'h5',
+    groupId: '3',
+    memberId: 's6',
+    memberName: 'Gabriel Souza',
+    memberMatricula: '2021002345',
+    previousRole: 'membro',
+    newRole: 'diretor',
+    changedBy: 'Prof. Roberto Campos',
+    changedAt: '2024-09-01T11:00:00Z',
+  },
+  {
+    id: 'h6',
+    groupId: '3',
+    memberId: 's7',
+    memberName: 'Beatriz Almeida',
+    memberMatricula: '2021006789',
+    previousRole: null,
+    newRole: 'vice',
+    changedBy: 'Prof. Roberto Campos',
+    changedAt: '2024-09-01T11:15:00Z',
+  },
 ];
