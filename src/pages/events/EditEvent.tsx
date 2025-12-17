@@ -176,7 +176,7 @@ export default function EditEvent() {
 
     // Redirecionar após um pequeno delay para que o usuário veja a mensagem
     setTimeout(() => {
-      navigate("/coordinator/opportunities");
+      navigate("/events/create");
     }, 2000);
   };
 

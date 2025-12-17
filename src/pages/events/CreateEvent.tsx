@@ -588,13 +588,17 @@ export default function CreateEvent() {
                         <td className="py-3 px-4">
                           <Badge
                             className={
-                              opportunity.status === "Aprovado"
+                              opportunity.status === "Ativo"
                                 ? "bg-success/10 text-success border-0"
-                                : "bg-blue-50 text-blue-700 border-0"
+                                : opportunity.status === "Aprovado"
+                                ? "bg-blue-50 text-blue-700 border-0"
+                                : "bg-destructive/10 text-destructive border-0"
                             }
                           >
-                            {opportunity.status === "Aprovado"
-                              ? "Aprovada"
+                            {opportunity.status === "Ativo"
+                              ? "Ativo"
+                              : opportunity.status === "Aprovado"
+                              ? "Aprovado"
                               : "Aguardando aprovação"}
                           </Badge>
                         </td>

@@ -123,10 +123,14 @@ export default function CoordinatorOpportunities() {
                       </td>
                       <td className="py-3 px-4">{o.hours}h</td>
                       <td className="py-3 px-4">
-                        <div className="flex items-center gap-1">
-                          <Users className="w-3 h-3" />
-                          {o.filledSlots} / {o.slots}
-                        </div>
+                        {o.status === "Ativo" ? (
+                          <div className="flex items-center gap-1">
+                            <Users className="w-3 h-3" />
+                            {o.filledSlots} / {o.slots}
+                          </div>
+                        ) : (
+                          "-"
+                        )}
                       </td>
                       <td className="py-3 px-4 text-sm text-muted-foreground">
                         {o.period}
