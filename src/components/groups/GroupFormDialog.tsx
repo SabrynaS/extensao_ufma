@@ -75,9 +75,9 @@ export function GroupFormDialog({
       description: formData.description,
       email: formData.email,
       type: formData.type,
-      responsibleTeacher: teacher ? { id: teacher.id, name: teacher.name } : group?.responsibleTeacher,
+      responsibleTeacher: teacher ? { id: teacher.id, name: teacher.name, email: teacher.email } : group?.responsibleTeacher,
       coordinator: coordinator
-        ? { id: coordinator.id, name: coordinator.name, email: coordinator.email, role: 'coordinator' }
+        ? { id: coordinator.id, name: coordinator.name, email: coordinator.email, role: 'diretor', matricula: coordinator.matricula }
         : undefined,
     });
 

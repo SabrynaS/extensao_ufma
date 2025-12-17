@@ -1,9 +1,9 @@
-import { useLocation, useNavigate } from 'react-router-dom';
-import { 
-  LayoutDashboard, 
-  FileText, 
-  Search, 
-  Award, 
+import { useLocation, useNavigate } from "react-router-dom";
+import {
+  LayoutDashboard,
+  FileText,
+  Search,
+  Award,
   User,
   ClipboardList,
   Users,
@@ -11,12 +11,12 @@ import {
   Settings,
   Bell,
   LogOut,
-  GraduationCap, 
+  GraduationCap,
   CalendarIcon,
-  Network
-} from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { useAuth } from '@/contexts/AuthContext';
+  Network,
+} from "lucide-react";
+import { cn } from "@/lib/utils";
+import { useAuth } from "@/contexts/AuthContext";
 
 interface NavItem {
   title: string;
@@ -26,32 +26,52 @@ interface NavItem {
 }
 
 const studentScholarNavItems: NavItem[] = [
-  { title: 'Visão Geral', icon: LayoutDashboard, path: '/student' },
-  { title: 'Minhas Solicitações', icon: FileText, path: '/student/requests' },
-  { title: 'Catálogo de Eventos', icon: Search, path: '/events' },
-  { title: 'Criar Evento', icon: CalendarIcon, path: '/events/create' },
-  { title: 'Meus Certificados', icon: Award, path: '/student/certificates' },
-  { title: 'Perfil', icon: User, path: '/student/profile' },
+  { title: "Visão Geral", icon: LayoutDashboard, path: "/student" },
+  { title: "Minhas Solicitações", icon: FileText, path: "/student/requests" },
+  { title: "Oportunidades", icon: Search, path: "/events" },
+  { title: "Criar Evento", icon: CalendarIcon, path: "/events/create" },
+  { title: "Meus Certificados", icon: Award, path: "/student/certificates" },
+  { title: "Perfil", icon: User, path: "/student/profile" },
 ];
 
 const studentNavItems: NavItem[] = [
-  { title: 'Visão Geral', icon: LayoutDashboard, path: '/student' },
-  { title: 'Minhas Solicitações', icon: FileText, path: '/student/requests' },
-  { title: 'Catálogo de Eventos', icon: Search, path: '/events' },
-  { title: 'Meus Certificados', icon: Award, path: '/student/certificates' },
-  { title: 'Perfil', icon: User, path: '/student/profile' },
+  { title: "Visão Geral", icon: LayoutDashboard, path: "/student" },
+  { title: "Minhas Solicitações", icon: FileText, path: "/student/requests" },
+  { title: "Oportunidades", icon: Search, path: "/events" },
+  { title: "Meus Certificados", icon: Award, path: "/student/certificates" },
+  { title: "Perfil", icon: User, path: "/student/profile" },
 ];
 
-
 const coordinatorNavItems: NavItem[] = [
-  { title: 'Painel Geral', icon: LayoutDashboard, path: '/coordinator' },
-  { title: 'Fila de Aprovações', icon: ClipboardList, path: '/coordinator/approvals' },
-  { title: 'Gerenciar Alunos', icon: Users, path: '/coordinator/students' },
-  { title: 'Gerenciar Grupos', icon: Network, path: '/coordinator/groups' },
-  { title: 'Relatórios e Métricas', icon: BarChart3, path: '/coordinator/reports' },
-  { title: 'Gerenciar Oportunidades', icon: Search, path: '/coordinator/opportunities' },
-  { title: 'Configurações do Curso', icon: Settings, path: '/coordinator/settings' },
-  { title: 'Central de Alertas', icon: Bell, path: '/coordinator/alerts', badge: 1 },
+  { title: "Painel Geral", icon: LayoutDashboard, path: "/coordinator" },
+  {
+    title: "Fila de Aprovações",
+    icon: ClipboardList,
+    path: "/coordinator/approvals",
+  },
+  { title: "Gerenciar Alunos", icon: Users, path: "/coordinator/students" },
+  { title: "Gerenciar Grupos", icon: Network, path: "/coordinator/groups" },
+  {
+    title: "Relatórios e Métricas",
+    icon: BarChart3,
+    path: "/coordinator/reports",
+  },
+  {
+    title: "Gerenciar Oportunidades",
+    icon: Search,
+    path: "/coordinator/opportunities",
+  },
+  {
+    title: "Configurações do Curso",
+    icon: Settings,
+    path: "/coordinator/settings",
+  },
+  {
+    title: "Central de Alertas",
+    icon: Bell,
+    path: "/coordinator/alerts",
+    badge: 1,
+  },
 ];
 
 const teacherNavItems: NavItem[] = [
@@ -96,12 +116,11 @@ export function AppSidebar() {
 
   const role = user?.role ?? "student";
 
-  const { navItems, panelTitle } =
-          roleConfig[role] ?? roleConfig.student;
+  const { navItems, panelTitle } = roleConfig[role] ?? roleConfig.student;
 
   const handleLogout = () => {
     logout();
-    navigate('/login');
+    navigate("/login");
   };
 
   return (
@@ -126,12 +145,15 @@ export function AppSidebar() {
           return (
             <button
               key={item.path}
-              onClick={() => navigate(item.path)}
+              onClick={() => {
+                console.log("Navigating to:", item.path);
+                navigate(item.path);
+              }}
               className={cn(
-                'w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-colors text-left',
-                isActive 
-                  ? 'bg-sidebar-accent text-sidebar-accent-foreground font-medium' 
-                  : 'hover:bg-sidebar-accent/50 text-sidebar-foreground/80'
+                "w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-colors text-left",
+                isActive
+                  ? "bg-sidebar-accent text-sidebar-accent-foreground font-medium"
+                  : "hover:bg-sidebar-accent/50 text-sidebar-foreground/80"
               )}
             >
               <item.icon className="w-5 h-5 shrink-0" />

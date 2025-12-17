@@ -1,35 +1,53 @@
-import { AppLayout } from '@/components/layout/AppLayout';
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Download, Award, FileCheck } from 'lucide-react';
-import { certificates } from '@/data/mockData';
-import { useToast } from '@/hooks/use-toast';
+import { AppLayout } from "@/components/layout/AppLayout";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Download, Award, FileCheck } from "lucide-react";
+import { certificates } from "@/data/mockData";
+import { useAlerts } from "@/hooks/useAlerts";
 
 export default function StudentCertificates() {
-  const { toast } = useToast();
+  const { addAlert } = useAlerts();
 
-  const handleDownload = (certificate: typeof certificates[0]) => {
-    toast({
-      title: 'Download iniciado',
-      description: `Baixando certificado de "${certificate.activity}"`,
-    });
+  const handleDownload = (certificate: (typeof certificates)[0]) => {
+    addAlert(
+      "success",
+      "Download iniciado",
+      `Baixando certificado de "${certificate.activity}"`
+    );
   };
 
   const handleDownloadDeclaration = () => {
-    toast({
-      title: 'Declaração gerada!',
-      description: 'Sua declaração de horas foi gerada em PDF.',
-    });
+    // Simular possível erro (5% de chance)
+    const hasError = Math.random() < 0.05;
+
+    if (hasError) {
+      addAlert(
+        "error",
+        "Erro ao gerar declaração",
+        "Ocorreu um erro ao processar sua solicitação. Tente novamente."
+      );
+      return;
+    }
+
+    addAlert(
+      "success",
+      "Declaração gerada!",
+      "Sua declaração de horas foi gerada em PDF."
+    );
   };
 
   return (
-    <AppLayout breadcrumb={['Início', 'Meus Certificados']}>
+    <AppLayout breadcrumb={["Início", "Meus Certificados"]}>
       <div className="space-y-6">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-bold text-primary">Meus Certificados</h1>
-            <p className="text-muted-foreground">Certificados de atividades aprovadas</p>
+            <h1 className="text-2xl font-bold text-primary">
+              Meus Certificados
+            </h1>
+            <p className="text-muted-foreground">
+              Certificados de atividades aprovadas
+            </p>
           </div>
           <Button onClick={handleDownloadDeclaration}>
             <Download className="w-4 h-4 mr-2" />
@@ -45,7 +63,9 @@ export default function StudentCertificates() {
                 <Award className="w-6 h-6 text-success" />
               </div>
               <div>
-                <h3 className="text-lg font-semibold">Total de Horas Certificadas</h3>
+                <h3 className="text-lg font-semibold">
+                  Total de Horas Certificadas
+                </h3>
                 <p className="text-2xl font-bold text-success">
                   {certificates.reduce((acc, c) => acc + c.hours, 0)}h
                 </p>
@@ -65,7 +85,9 @@ export default function StudentCertificates() {
                       <FileCheck className="w-6 h-6 text-primary" />
                     </div>
                     <div>
-                      <h3 className="font-semibold mb-1">{certificate.activity}</h3>
+                      <h3 className="font-semibold mb-1">
+                        {certificate.activity}
+                      </h3>
                       <div className="flex items-center gap-3 text-sm text-muted-foreground">
                         <Badge variant="outline">{certificate.type}</Badge>
                         <span>{certificate.hours}h</span>
@@ -77,7 +99,10 @@ export default function StudentCertificates() {
                       </p>
                     </div>
                   </div>
-                  <Button variant="outline" onClick={() => handleDownload(certificate)}>
+                  <Button
+                    variant="outline"
+                    onClick={() => handleDownload(certificate)}
+                  >
                     <Download className="w-4 h-4 mr-2" />
                     Baixar
                   </Button>
@@ -91,7 +116,9 @@ export default function StudentCertificates() {
           <Card>
             <CardContent className="p-12 text-center">
               <Award className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-              <h3 className="text-lg font-semibold mb-2">Nenhum certificado ainda</h3>
+              <h3 className="text-lg font-semibold mb-2">
+                Nenhum certificado ainda
+              </h3>
               <p className="text-muted-foreground">
                 Seus certificados de atividades aprovadas aparecerão aqui
               </p>

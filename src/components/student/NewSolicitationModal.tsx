@@ -1,66 +1,117 @@
-import { useState, useRef } from 'react';
+import { useState, useRef } from "react";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogDescription,
-} from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { Upload, X } from 'lucide-react';
-import { activityTypes } from '@/data/mockData';
-import { useToast } from '@/hooks/use-toast';
+} from "@/components/ui/select";
+import { Upload, X } from "lucide-react";
+import { activityTypes } from "@/data/mockData";
+import { useAlerts } from "@/hooks/useAlerts";
 
 interface NewSolicitationModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }
 
-export function NewSolicitationModal({ open, onOpenChange }: NewSolicitationModalProps) {
-  const { toast } = useToast();
+export function NewSolicitationModal({
+  open,
+  onOpenChange,
+}: NewSolicitationModalProps) {
+  const { addAlert } = useAlerts();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [formData, setFormData] = useState({
-    type: '',
-    institution: '',
-    activity: '',
-    hours: '',
-    year: '',
-    startDate: '',
-    endDate: '',
-    description: '',
+    type: "",
+    institution: "",
+    activity: "",
+    hours: "",
+    year: "",
+    startDate: "",
+    endDate: "",
+    description: "",
   });
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
-    toast({
-      title: 'Solicitação enviada!',
-      description: 'Sua atividade foi submetida para análise.',
-    });
-    
-    onOpenChange(false);
-    setFormData({
-      type: '',
-      institution: '',
-      activity: '',
-      hours: '',
-      year: '',
-      startDate: '',
-      endDate: '',
-      description: '',
-    });
-    setSelectedFile(null);
+
+    // Validar campos obrigatórios
+    const requiredFields = [
+      "type",
+      "institution",
+      "activity",
+      "hours",
+      "year",
+      "startDate",
+      "endDate",
+    ];
+    const emptyFields = requiredFields.filter(
+      (field) => !formData[field as keyof typeof formData]
+    );
+
+    if (emptyFields.length > 0) {
+      addAlert(
+        "error",
+        "Campos obrigatórios",
+        "Todos os campos marcados são obrigatórios."
+      );
+      return;
+    }
+
+    if (!selectedFile) {
+      addAlert(
+        "error",
+        "Arquivo necessário",
+        "É necessário anexar o certificado da atividade."
+      );
+      return;
+    }
+
+    // Simular possível erro de upload (10% de chance)
+    const hasError = Math.random() < 0.1;
+
+    if (hasError) {
+      addAlert(
+        "error",
+        "Erro no envio",
+        "Ocorreu um erro ao processar sua solicitação. Tente novamente."
+      );
+      return;
+    }
+
+    addAlert(
+      "success",
+      "Solicitação enviada!",
+      "Sua atividade foi submetida para análise."
+    );
+
+    // Fechar modal após um pequeno delay para garantir que o alerta seja exibido
+    setTimeout(() => {
+      onOpenChange(false);
+      setFormData({
+        type: "",
+        institution: "",
+        activity: "",
+        hours: "",
+        year: "",
+        startDate: "",
+        endDate: "",
+        description: "",
+      });
+      setSelectedFile(null);
+    }, 1000);
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -82,20 +133,28 @@ export function NewSolicitationModal({ open, onOpenChange }: NewSolicitationModa
         <DialogHeader>
           <DialogTitle>Registrar Atividade Externa</DialogTitle>
           <DialogDescription>
-            Preencha os dados da atividade realizada e anexe o certificado comprobatório
+            Preencha os dados da atividade realizada e anexe o certificado
+            comprobatório
           </DialogDescription>
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="type">Tipo de Atividade *</Label>
-            <Select value={formData.type} onValueChange={(value) => setFormData({ ...formData, type: value })}>
+            <Select
+              value={formData.type}
+              onValueChange={(value) =>
+                setFormData({ ...formData, type: value })
+              }
+            >
               <SelectTrigger>
                 <SelectValue placeholder="Selecione o tipo" />
               </SelectTrigger>
               <SelectContent className="bg-popover">
                 {activityTypes.map((type) => (
-                  <SelectItem key={type} value={type}>{type}</SelectItem>
+                  <SelectItem key={type} value={type}>
+                    {type}
+                  </SelectItem>
                 ))}
               </SelectContent>
             </Select>
@@ -107,7 +166,9 @@ export function NewSolicitationModal({ open, onOpenChange }: NewSolicitationModa
               id="institution"
               placeholder="Ex: Universidade Federal do Maranhão"
               value={formData.institution}
-              onChange={(e) => setFormData({ ...formData, institution: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, institution: e.target.value })
+              }
               required
             />
           </div>
@@ -118,7 +179,9 @@ export function NewSolicitationModal({ open, onOpenChange }: NewSolicitationModa
               id="activity"
               placeholder="Ex: Curso de Python para Ciência de Dados"
               value={formData.activity}
-              onChange={(e) => setFormData({ ...formData, activity: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, activity: e.target.value })
+              }
               required
             />
           </div>
@@ -131,7 +194,9 @@ export function NewSolicitationModal({ open, onOpenChange }: NewSolicitationModa
                 type="number"
                 placeholder="Ex: 40"
                 value={formData.hours}
-                onChange={(e) => setFormData({ ...formData, hours: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, hours: e.target.value })
+                }
                 required
               />
             </div>
@@ -141,7 +206,9 @@ export function NewSolicitationModal({ open, onOpenChange }: NewSolicitationModa
                 id="year"
                 placeholder="Ex: 2024"
                 value={formData.year}
-                onChange={(e) => setFormData({ ...formData, year: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, year: e.target.value })
+                }
                 required
               />
             </div>
@@ -154,7 +221,9 @@ export function NewSolicitationModal({ open, onOpenChange }: NewSolicitationModa
                 id="startDate"
                 type="date"
                 value={formData.startDate}
-                onChange={(e) => setFormData({ ...formData, startDate: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, startDate: e.target.value })
+                }
                 required
               />
             </div>
@@ -164,7 +233,9 @@ export function NewSolicitationModal({ open, onOpenChange }: NewSolicitationModa
                 id="endDate"
                 type="date"
                 value={formData.endDate}
-                onChange={(e) => setFormData({ ...formData, endDate: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, endDate: e.target.value })
+                }
                 required
               />
             </div>
@@ -207,7 +278,9 @@ export function NewSolicitationModal({ open, onOpenChange }: NewSolicitationModa
                   <p className="text-sm text-muted-foreground mb-1">
                     Arraste seu certificado aqui
                   </p>
-                  <p className="text-xs text-muted-foreground mb-3">ou clique para selecionar</p>
+                  <p className="text-xs text-muted-foreground mb-3">
+                    ou clique para selecionar
+                  </p>
                   <Button type="button" variant="secondary" size="sm">
                     Selecionar Arquivo
                   </Button>
@@ -220,19 +293,30 @@ export function NewSolicitationModal({ open, onOpenChange }: NewSolicitationModa
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="description">Descrição/Observações Adicionais</Label>
+            <Label htmlFor="description">
+              Descrição/Observações Adicionais
+            </Label>
             <Textarea
               id="description"
               placeholder="Descreva brevemente as atividades realizadas ou informações relevantes..."
               value={formData.description}
-              onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, description: e.target.value })
+              }
               rows={3}
             />
-            <p className="text-xs text-muted-foreground">Opcional - máximo 500 caracteres</p>
+            <p className="text-xs text-muted-foreground">
+              Opcional - máximo 500 caracteres
+            </p>
           </div>
 
           <div className="flex gap-3 pt-2">
-            <Button type="button" variant="outline" className="flex-1" onClick={() => onOpenChange(false)}>
+            <Button
+              type="button"
+              variant="outline"
+              className="flex-1"
+              onClick={() => onOpenChange(false)}
+            >
               Cancelar
             </Button>
             <Button type="submit" className="flex-1">
