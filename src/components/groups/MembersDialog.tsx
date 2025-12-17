@@ -57,7 +57,7 @@ export function MembersDialog({ open, onOpenChange, group }: MembersDialogProps)
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2">
                       <p className="font-medium truncate">{member.name}</p>
-                      {member.role === 'coordinator' && (
+                      {member.role === 'diretor' && (
                         <Badge className="bg-warning/10 text-warning hover:bg-warning/20 border-0 flex items-center gap-1">
                           <Crown className="h-3 w-3" />
                           Coordenador

@@ -64,7 +64,7 @@ export default function GroupsManagement() {
         description: groupData.description || '',
         email: groupData.email || '',
         type: groupData.type || 'outros',
-        responsibleTeacher: groupData.responsibleTeacher || { id: '', name: '' },
+        responsibleTeacher: groupData.responsibleTeacher || { id: '', name: '', email: '' },
         coordinator: groupData.coordinator,
         members: groupData.coordinator ? [groupData.coordinator] : [],
         status: 'active',
