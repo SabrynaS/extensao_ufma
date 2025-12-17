@@ -1,32 +1,39 @@
-import { useState } from 'react';
-import { useAuth } from '@/contexts/AuthContext';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { GraduationCap, Eye, EyeOff, CheckCircle } from 'lucide-react';
-import { useToast } from '@/hooks/use-toast';
-import { useNavigate } from 'react-router-dom';
-import { Modal } from '@/components/ui/modal';
+import React, { useState } from "react";
+import { useAuth } from "@/contexts/AuthContext";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
+import { GraduationCap, Eye, EyeOff, CheckCircle } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
+import { useNavigate } from "react-router-dom";
+import { Modal } from "@/components/ui/modal";
 
-export default function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+const Login: React.FC = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
   const { login } = useAuth();
   const { toast } = useToast();
 
   function handleSignIn() {
-    navigate('/sign-up');
+    navigate("/sign-up");
   }
 
   function handleCloseModal() {
     setIsModalOpen(false);
-  };
+  }
 
   function handleOpenModal() {
     setIsModalOpen(true);
@@ -36,8 +43,9 @@ export default function Login() {
     e.preventDefault();
 
     toast({
-      title: 'Recuperação de senha',
-      description: 'Instruções para recuperação de senha foram enviadas para o seu e-mail institucional.',
+      title: "Recuperação de senha",
+      description:
+        "Instruções para recuperação de senha foram enviadas para o seu e-mail institucional.",
     });
 
     handleCloseModal();
@@ -45,30 +53,12 @@ export default function Login() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
-
-    try {
-      const success = await login(email, password);
-      if (success) {
-        toast({
-          title: 'Login realizado com sucesso!',
-          description: 'Redirecionando para o painel...',
-        });
-      } else {
-        toast({
-          title: 'Erro no login',
-          description: 'Verifique suas credenciais e tente novamente.',
-          variant: 'destructive',
-        });
-      }
-    } catch (error) {
-      toast({
-        title: 'Erro no login',
-        description: 'Ocorreu um erro inesperado.',
-        variant: 'destructive',
-      });
-    } finally {
-      setIsLoading(false);
+    setError(null);
+    const normalized = email.trim().toLowerCase();
+    console.info("[Login] submitting email:", normalized);
+    const ok = await login({ email: normalized, password });
+    if (!ok) {
+      setError("Credenciais inválidas");
     }
   };
 
@@ -80,8 +70,12 @@ export default function Login() {
             <GraduationCap className="w-8 h-8 text-primary-foreground" />
           </div>
           <div>
-            <CardTitle className="text-2xl text-primary">Extensão UFMA</CardTitle>
-            <CardDescription>Sistema de Gerenciamento de Extensão</CardDescription>
+            <CardTitle className="text-2xl text-primary">
+              Extensão UFMA
+            </CardTitle>
+            <CardDescription>
+              Sistema de Gerenciamento de Extensão
+            </CardDescription>
           </div>
         </CardHeader>
         <CardContent>
@@ -103,7 +97,7 @@ export default function Login() {
               <div className="relative">
                 <Input
                   id="password"
-                  type={showPassword ? 'text' : 'password'}
+                  type={showPassword ? "text" : "password"}
                   placeholder="••••••••"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -114,13 +108,18 @@ export default function Login() {
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
                 >
-                  {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  {showPassword ? (
+                    <EyeOff className="w-4 h-4" />
+                  ) : (
+                    <Eye className="w-4 h-4" />
+                  )}
                 </button>
               </div>
             </div>
+            {error && <div className="text-red-600">{error}</div>}
 
             <Button type="submit" className="w-full" disabled={isLoading}>
-              {isLoading ? 'Entrando...' : 'Acessar Sistema'}
+              {isLoading ? "Entrando..." : "Acessar Sistema"}
             </Button>
 
             <div className="flex justify-between text-center text-sm">
@@ -142,10 +141,11 @@ export default function Login() {
           </form>
           <div className="mt-6 pt-4 border-t border-border/50 text-center">
             <p className="text-sm text-muted-foreground mb-3">
-              Busca informações ou precisa verificar a autenticidade de um documento?
+              Busca informações ou precisa verificar a autenticidade de um
+              documento?
             </p>
-            <Button 
-              onClick={() => navigate('validate')}
+            <Button
+              onClick={() => navigate("validate")}
               className="w-full"
             >
               Validar Certificado
@@ -153,23 +153,37 @@ export default function Login() {
           </div>
         </CardContent>
       </Card>
-      {isModalOpen && 
-        <Modal isOpen={isModalOpen} onClose={handleCloseModal} icon={<CheckCircle />}>
+      {isModalOpen && (
+        <Modal
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+          icon={<CheckCircle />}
+        >
           <form onSubmit={handleSubmitRecoverPassword}>
             <p>Digite seu e-mail institucional para recuperar sua senha.</p>
-            <Input 
+            <Input
               id="recovery-email"
-              type="email" 
-              placeholder="Digite seu e-mail institucional" 
+              type="email"
+              placeholder="Digite seu e-mail institucional"
               required
             />
             <div className="flex flex-row items-center justify-center gap-4">
-              <Button type='submit' className="mt-4 w-2/4">Enviar</Button>
-              <Button type='button' onClick={handleCloseModal} className="mt-4 w-2/4">Cancelar</Button>
+              <Button type="submit" className="mt-4 w-2/4">
+                Enviar
+              </Button>
+              <Button
+                type="button"
+                onClick={handleCloseModal}
+                className="mt-4 w-2/4"
+              >
+                Cancelar
+              </Button>
             </div>
           </form>
         </Modal>
-      }
+      )}
     </div>
   );
-}
+};
+
+export default Login;

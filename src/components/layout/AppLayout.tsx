@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { AppSidebar } from './AppSidebar';
+import AppSidebar  from '@/components/layout/AppSidebar';
 import { AppHeader } from './AppHeader';
 
 interface AppLayoutProps {

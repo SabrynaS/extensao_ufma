@@ -10,6 +10,17 @@ export interface User {
   avatar?: string;
 }
 
+export type AdminRole = 'docente' | 'coordenador' | 'comissao' | 'secretaria' | 'admin' | 'discente';
+
+export interface AdminUser {
+  id: string;
+  name: string;
+  email: string;
+  registration?: string; // matrícula ou SIAPE
+  role: AdminRole;
+  createdAt: string;
+}
+
 export type GroupMemberRole = 'diretor' | 'vice' | 'tesoureiro' | 'membro';
 
 export const groupMemberRoleLabels: Record<GroupMemberRole, string> = {
@@ -166,7 +177,7 @@ export const users = {
     id: "1",
     name: "Ana Souza",
     email: "ana.souza@ufma.br",
-    role: "student",
+    role: "discente",
     course: "Ciência da Computação",
     matricula: "2021001234",
   },
@@ -174,28 +185,28 @@ export const users = {
     id: "2",
     name: "Prof. Dr. Roberto Lima",
     email: "roberto.lima@ufma.br",
-    role: "coordinator",
+    role: "coordenador",
     course: "Ciência da Computação",
   },
   teacher: {
     id: "3",
     name: "João Silva",
     email: "joao.silva@ufma.br",
-    role: "teacher",
+    role: "docente",
     course: "Ciência da Computação",
   },
   secretary: {
     id: "4",
     name: "Maria Oliveira",
     email: "maria.oliveira@ufma.br",
-    role: "secretary",
+    role: "secretaria",
     course: "Ciência da Computação",
   },
   student_scholar: {
     id: "5",
     name: "Patrick Camara Araujo",
     email: "patrick.araujo@discente.ufma.br",
-    role: "student_scholar",
+    role: "discente",
     course: "Ciência da Computação",
   },
   admin: {

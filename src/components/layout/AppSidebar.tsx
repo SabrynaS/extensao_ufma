@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/contexts/AuthContext";
+import {NavLink} from "@/components/NavLink";
 
 interface NavItem {
   title: string;
@@ -41,6 +42,8 @@ const studentNavItems: NavItem[] = [
   { title: "Meus Certificados", icon: Award, path: "/student/certificates" },
   { title: "Perfil", icon: User, path: "/student/profile" },
 ];
+
+
 
 const coordinatorNavItems: NavItem[] = [
   { title: "Painel Geral", icon: LayoutDashboard, path: "/coordinator" },
@@ -82,6 +85,11 @@ const teacherNavItems: NavItem[] = [
   { title: 'Perfil', icon: User, path: '/teacher/profile' },
 ];
 
+// Novos itens do admin
+const adminNavItems: NavItem[] = [
+  { title: "Gestão de Usuários", icon: Users, path: "/admin/users" },
+];
+
 const roleConfig = {
   coordinator: {
     navItems: coordinatorNavItems,
@@ -107,14 +115,19 @@ const roleConfig = {
     navItems: studentScholarNavItems,
     panelTitle: "Painel do Discente",
   },
+
+  admin: {
+    navItems: adminNavItems,
+    panelTitle: "Painel do Administrador",
+  },
 } as const;
 
-export function AppSidebar() {
+export default function AppSidebar() {
   const location = useLocation();
   const navigate = useNavigate();
   const { user, logout } = useAuth();
 
-  const role = user?.role ?? "student";
+  const role = (user?.role ?? "student") as keyof typeof roleConfig;
 
   const { navItems, panelTitle } = roleConfig[role] ?? roleConfig.student;
 
