@@ -122,7 +122,8 @@ const Login: React.FC = () => {
               {isLoading ? "Entrando..." : "Acessar Sistema"}
             </Button>
 
-            <div className="flex justify-between text-center text-sm">
+            <div className="flex align-center justify-center gap-1 text-sm">
+              <p>Esqueceu sua senha?</p>
               <button
                 type="button"
                 onClick={handleOpenModal}
@@ -130,6 +131,10 @@ const Login: React.FC = () => {
               >
                 Recuperar acesso
               </button>
+            </div>
+
+            <div className="flex align-center justify-center gap-1 text-sm">
+              <p>Ainda não tem uma conta?</p>
               <button
                 type="button"
                 onClick={handleSignIn}
@@ -139,18 +144,6 @@ const Login: React.FC = () => {
               </button>
             </div>
           </form>
-          <div className="mt-6 pt-4 border-t border-border/50 text-center">
-            <p className="text-sm text-muted-foreground mb-3">
-              Busca informações ou precisa verificar a autenticidade de um
-              documento?
-            </p>
-            <Button
-              onClick={() => navigate("validate")}
-              className="w-full"
-            >
-              Validar Certificado
-            </Button>
-          </div>
         </CardContent>
       </Card>
       {isModalOpen && (

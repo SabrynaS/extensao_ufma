@@ -32,6 +32,7 @@ import TeacherReports from "./pages/teacher/Reports";
 import TeacherProfile from "./pages/teacher/Profile";
 import { AppLayout } from "@/components/layout/AppLayout";
 import AdminUsersPage from "./pages/admin/Users";
+import { Home } from "./pages/Home";
 
 const queryClient = new QueryClient();
 
@@ -67,7 +68,7 @@ function AppRoutes() {
           isAuthenticated ? <Navigate to={loginRedirect} replace /> : <Login />
         }
       />
-      <Route path="/" element={<Navigate to="/login" replace />} />
+      <Route path="/" element={<Home />} />
       <Route path="/sign-up" element={<SignUp />} />
 
       {/* Student Routes */}
