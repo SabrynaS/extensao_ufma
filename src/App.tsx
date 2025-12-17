@@ -28,6 +28,7 @@ import GroupsManagement from "./pages/coordinator/GroupsManagement";
 import GroupMemberRoles from "./pages/teacher/GroupMembersRoles";
 import { AppLayout } from "@/components/layout/AppLayout";
 import AdminUsersPage from "./pages/admin/Users";
+import { Home } from "./pages/Home";
 
 const queryClient = new QueryClient();
 
@@ -62,7 +63,7 @@ function AppRoutes() {
           isAuthenticated ? <Navigate to={loginRedirect} replace /> : <Login />
         }
       />
-      <Route path="/" element={<Navigate to="/login" replace />} />
+      <Route path="/" element={<Home />} />
       <Route path="/sign-up" element={<SignUp />} />
 
       {/* Student Routes */}
