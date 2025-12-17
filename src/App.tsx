@@ -26,6 +26,10 @@ import EditEvent from "./pages/events/EditEvent";
 import NotFound from "./pages/NotFound";
 import GroupsManagement from "./pages/coordinator/GroupsManagement";
 import GroupMemberRoles from "./pages/teacher/GroupMembersRoles";
+import TeacherDashboard from "./pages/teacher/Dashboard";
+import TeacherOpportunities from "./pages/teacher/Opportunities";
+import TeacherReports from "./pages/teacher/Reports";
+import TeacherProfile from "./pages/teacher/Profile";
 import { AppLayout } from "@/components/layout/AppLayout";
 import AdminUsersPage from "./pages/admin/Users";
 
@@ -49,8 +53,9 @@ function AppRoutes() {
     if (!user) return "/login";
     const role = user.role;
     if (role === "admin") return "/admin";
-    if (role === "coordinator") return "/coordinator";
-    if (role === "teacher") return "/teacher/groups";
+    if (role === "coordenador" || role === "coordinator") return "/coordinator";
+    if (role === "docente" || role === "teacher") return "/teacher/groups";
+    if (role === "student_scholar") return "/events/create";
     return "/student";
   })();
 
@@ -87,7 +92,11 @@ function AppRoutes() {
       <Route path="/events/edit/:id" element={<ProtectedRoute><EditEvent /></ProtectedRoute>} />
 
       {/* Teacher Routes */}
+      <Route path="/teacher" element={<ProtectedRoute><TeacherDashboard /></ProtectedRoute>} />
       <Route path="/teacher/groups" element={<ProtectedRoute><GroupMemberRoles /></ProtectedRoute>} />
+      <Route path="/teacher/opportunities" element={<ProtectedRoute><TeacherOpportunities /></ProtectedRoute>} />
+      <Route path="/teacher/reports" element={<ProtectedRoute><TeacherReports /></ProtectedRoute>} />
+      <Route path="/teacher/profile" element={<ProtectedRoute><TeacherProfile /></ProtectedRoute>} />
 
       {/* Admin (mantém sidebar/header via AppLayout) */}
       <Route
