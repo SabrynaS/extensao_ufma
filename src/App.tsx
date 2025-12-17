@@ -39,13 +39,6 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }
 
-// helper para aplicar ProtectedRoute + AppLayout de forma consistente
-const withLayout = (node: React.ReactNode) => (
-  <ProtectedRoute>
-    <AppLayout breadcrumb={[]}>{node}</AppLayout>
-  </ProtectedRoute>
-);
-
 function AppRoutes() {
   const { isAuthenticated, user, loading } = useAuth();
 
@@ -72,26 +65,26 @@ function AppRoutes() {
       <Route path="/" element={<Navigate to="/login" replace />} />
       <Route path="/sign-up" element={<SignUp />} />
 
-      {/* Student Routes (com layout) */}
-      <Route path="/student" element={withLayout(<StudentDashboard />)} />
-      <Route path="/student/requests" element={withLayout(<StudentRequests />)} />
-      <Route path="/student/certificates" element={withLayout(<StudentCertificates />)} />
-      <Route path="/student/profile" element={withLayout(<StudentProfile />)} />
+      {/* Student Routes */}
+      <Route path="/student" element={<ProtectedRoute><StudentDashboard /></ProtectedRoute>} />
+      <Route path="/student/requests" element={<ProtectedRoute><StudentRequests /></ProtectedRoute>} />
+      <Route path="/student/certificates" element={<ProtectedRoute><StudentCertificates /></ProtectedRoute>} />
+      <Route path="/student/profile" element={<ProtectedRoute><StudentProfile /></ProtectedRoute>} />
 
-      {/* Coordinator Routes (com layout) */}
-      <Route path="/coordinator" element={withLayout(<CoordinatorReports />)} />
-      <Route path="/coordinator/approvals" element={withLayout(<CoordinatorApprovals />)} />
-      <Route path="/coordinator/students" element={withLayout(<CoordinatorStudents />)} />
-      <Route path="/coordinator/reports" element={withLayout(<CoordinatorReports />)} />
-      <Route path="/coordinator/opportunities" element={withLayout(<CoordinatorOpportunities />)} />
-      <Route path="/coordinator/settings" element={withLayout(<CoordinatorSettings />)} />
-      <Route path="/coordinator/alerts" element={withLayout(<CoordinatorAlerts />)} />
-      <Route path="/coordinator/groups" element={withLayout(<GroupsManagement />)} />
+      {/* Coordinator Routes */}
+      <Route path="/coordinator" element={<ProtectedRoute><CoordinatorReports /></ProtectedRoute>} />
+      <Route path="/coordinator/approvals" element={<ProtectedRoute><CoordinatorApprovals /></ProtectedRoute>} />
+      <Route path="/coordinator/students" element={<ProtectedRoute><CoordinatorStudents /></ProtectedRoute>} />
+      <Route path="/coordinator/reports" element={<ProtectedRoute><CoordinatorReports /></ProtectedRoute>} />
+      <Route path="/coordinator/opportunities" element={<ProtectedRoute><CoordinatorOpportunities /></ProtectedRoute>} />
+      <Route path="/coordinator/settings" element={<ProtectedRoute><CoordinatorSettings /></ProtectedRoute>} />
+      <Route path="/coordinator/alerts" element={<ProtectedRoute><CoordinatorAlerts /></ProtectedRoute>} />
+      <Route path="/coordinator/groups" element={<ProtectedRoute><GroupsManagement /></ProtectedRoute>} />
 
-      {/* Events Routes (com layout) */}
-      <Route path="/events" element={withLayout(<StudentEvents />)} />
-      <Route path="/events/create" element={withLayout(<CreateEvent />)} />
-      <Route path="/events/edit/:id" element={withLayout(<EditEvent />)} />
+      {/* Events Routes */}
+      <Route path="/events" element={<ProtectedRoute><StudentEvents /></ProtectedRoute>} />
+      <Route path="/events/create" element={<ProtectedRoute><CreateEvent /></ProtectedRoute>} />
+      <Route path="/events/edit/:id" element={<ProtectedRoute><EditEvent /></ProtectedRoute>} />
 
       {/* Teacher Routes */}
       <Route path="/teacher/groups" element={<ProtectedRoute><GroupMemberRoles /></ProtectedRoute>} />
