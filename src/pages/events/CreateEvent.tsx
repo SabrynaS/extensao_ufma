@@ -33,7 +33,6 @@ import {
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import {
-  userCreatedOpportunities,
   Opportunity,
   mockTeachers,
 } from "@/data/mockData";
@@ -41,7 +40,9 @@ import { OpportunityDetailsModal } from "@/components/student/OpportunityDetails
 import { DeleteOpportunityConfirm } from "@/components/student/DeleteOpportunityConfirm";
 import { Steps, StepsContent } from "@/components/ui/steps";
 import { useAlerts } from "@/hooks/useAlerts";
+import { useOpportunities } from "@/contexts/OpportunitiesContext";
 import { useState } from "react";
+import { v4 as uuidv4 } from 'uuid';
 
 interface FormData {
   title: string;
@@ -57,8 +58,10 @@ interface FormData {
 export default function CreateEvent() {
   const navigate = useNavigate();
   const { alerts, addAlert, removeAlert } = useAlerts();
+  const { userOpportunities, addUserOpportunity, updateUserOpportunity, deleteUserOpportunity } = useOpportunities();
   const [showForm, setShowForm] = useState(false);
   const [formStep, setFormStep] = useState<1 | 2>(1);
+  const [editingId, setEditingId] = useState<string | null>(null);
   const [formData, setFormData] = useState<FormData>({
     title: "",
     type: "",
@@ -121,11 +124,40 @@ export default function CreateEvent() {
       return;
     }
 
-    addAlert(
-      "success",
-      "Novo evento criado com sucesso!",
-      "Verifique a lista de eventos para ver a nova oportunidade."
-    );
+    // Create new opportunity object
+    const newOpportunity: Opportunity = {
+      id: editingId || uuidv4(),
+      title: formData.title,
+      type: formData.type as any,
+      hours: parseInt(formData.hours),
+      slots: parseInt(formData.slots),
+      instructor: formData.instructor,
+      startDate: formData.startDate,
+      endDate: formData.endDate,
+      description: formData.description,
+      date: formData.startDate,
+      validation: "Automática",
+      filledSlots: editingId ? (userOpportunities.find(o => o.id === editingId)?.filledSlots || 0) : 0,
+      status: editingId ? (userOpportunities.find(o => o.id === editingId)?.status || "Aguardando aprovação") : "Aguardando aprovação"
+    };
+
+    // Save to context (and localStorage)
+    if (editingId) {
+      updateUserOpportunity(editingId, newOpportunity);
+      addAlert(
+        "success",
+        "Evento atualizado com sucesso!",
+        "As alterações foram salvas."
+      );
+      setEditingId(null);
+    } else {
+      addUserOpportunity(newOpportunity);
+      addAlert(
+        "success",
+        "Novo evento criado com sucesso!",
+        "Verifique a lista de eventos para ver a nova oportunidade."
+      );
+    }
 
     // Resetar formulário após sucesso
     setShowForm(false);
@@ -193,6 +225,7 @@ export default function CreateEvent() {
 
   const confirmDelete = () => {
     if (opportunityToDelete) {
+      deleteUserOpportunity(opportunityToDelete.id);
       addAlert(
         "success",
         "Evento excluído",
@@ -532,7 +565,7 @@ export default function CreateEvent() {
               <div>
                 <CardTitle>Oportunidades Criadas</CardTitle>
                 <CardDescription>
-                  Total de oportunidades: {userCreatedOpportunities.length}
+                  Total de oportunidades: {userOpportunities.length}
                 </CardDescription>
               </div>
               <Button onClick={() => setShowForm(true)}>
@@ -564,7 +597,7 @@ export default function CreateEvent() {
                     </tr>
                   </thead>
                   <tbody>
-                    {userCreatedOpportunities.map((opportunity) => (
+                    {userOpportunities.map((opportunity) => (
                       <tr
                         key={opportunity.id}
                         className="border-b hover:bg-muted/50"
@@ -576,30 +609,26 @@ export default function CreateEvent() {
                           <Badge variant="outline">{opportunity.type}</Badge>
                         </td>
                         <td className="py-3 px-4 text-sm">
-                          {opportunity.status === "Ativo" ? (
-                            <div className="flex items-center gap-1">
-                              <Users className="w-3 h-3" />
-                              {opportunity.filledSlots} / {opportunity.slots}
-                            </div>
-                          ) : (
-                            "-"
-                          )}
+                          <div className="flex items-center gap-1">
+                            <Users className="w-3 h-3" />
+                            {opportunity.filledSlots} / {opportunity.slots}
+                          </div>
                         </td>
                         <td className="py-3 px-4">
                           <Badge
                             className={
-                              opportunity.status === "Ativo"
+                              opportunity.status === "Aprovado"
                                 ? "bg-success/10 text-success border-0"
-                                : opportunity.status === "Aprovado"
-                                ? "bg-blue-50 text-blue-700 border-0"
-                                : "bg-destructive/10 text-destructive border-0"
+                                : opportunity.status === "Aguardando aprovação"
+                                ? "bg-destructive/10 text-destructive border-0"
+                                : "bg-blue-50 text-blue-700 border-0"
                             }
                           >
-                            {opportunity.status === "Ativo"
+                            {opportunity.status === "Aprovado"
                               ? "Ativo"
-                              : opportunity.status === "Aprovado"
-                              ? "Aprovado"
-                              : "Aguardando aprovação"}
+                              : opportunity.status === "Aguardando aprovação"
+                              ? "Aguardando aprovação"
+                              : "Aprovado"}
                           </Badge>
                         </td>
                         <td className="py-3 px-4">

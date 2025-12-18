@@ -1,7 +1,7 @@
 import { AppLayout } from "@/components/layout/AppLayout";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { groupTypeLabels, mockGroups, StudentGroup } from "@/data/mockData";
+import { groupTypeLabels, StudentGroup } from "@/data/mockData";
 import { AlertTriangle, Badge, CheckCircle, Download, Eye, Filter, Network, Plus, PlusCircle, Search, TrendingUp, Users } from "lucide-react";
 import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -10,9 +10,10 @@ import { GroupsTable } from "@/components/groups/GroupsTable";
 import { GroupFormDialog } from "@/components/groups/GroupFormDialog";
 import { MembersDialog } from "@/components/groups/MembersDialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useStudentGroups } from "@/contexts/StudentGroupsContext";
 
 export default function GroupsManagement() {
-  const [groups, setGroups] = useState<StudentGroup[]>(mockGroups);
+  const { groups, addGroup, updateGroup, deleteGroup } = useStudentGroups();
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState<'all' | 'active' | 'inactive'>('all');
   const [typeFilter, setTypeFilter] = useState<string>('all');
@@ -49,13 +50,11 @@ export default function GroupsManagement() {
 
   const handleSaveGroup = (groupData: Partial<StudentGroup>) => {
     if (editingGroup) {
-      setGroups((prev) =>
-        prev.map((g) =>
-          g.id === editingGroup.id
-            ? { ...g, ...groupData, updatedAt: new Date().toISOString().split('T')[0] }
-            : g
-        )
-      );
+      updateGroup(editingGroup.id, {
+        ...editingGroup,
+        ...groupData,
+        updatedAt: new Date().toISOString().split('T')[0]
+      });
       toast({ title: 'Grupo atualizado com sucesso!' });
     } else {
       const newGroup: StudentGroup = {
@@ -71,20 +70,18 @@ export default function GroupsManagement() {
         createdAt: new Date().toISOString().split('T')[0],
         updatedAt: new Date().toISOString().split('T')[0],
       };
-      setGroups((prev) => [...prev, newGroup]);
+      addGroup(newGroup);
       toast({ title: 'Grupo criado com sucesso!' });
     }
   };
 
   const handleToggleStatus = (group: StudentGroup) => {
     const newStatus = group.status === 'active' ? 'inactive' : 'active';
-    setGroups((prev) =>
-      prev.map((g) =>
-        g.id === group.id
-          ? { ...g, status: newStatus, updatedAt: new Date().toISOString().split('T')[0] }
-          : g
-      )
-    );
+    updateGroup(group.id, {
+      ...group,
+      status: newStatus,
+      updatedAt: new Date().toISOString().split('T')[0]
+    });
     toast({
       title: newStatus === 'active' ? 'Grupo Ativado' : 'Grupo Inativado',
     });

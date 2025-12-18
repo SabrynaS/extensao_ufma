@@ -4,6 +4,9 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "@/contexts/AuthContext";
+import { OpportunitiesProvider } from "@/contexts/OpportunitiesContext";
+import { StudentGroupsProvider } from "@/contexts/StudentGroupsContext";
+import { SolicitationsProvider } from "@/contexts/SolicitationsContext";
 import { AlertsContainer } from "@/components/AlertsContainer";
 import { AlertProvider } from "@/contexts/AlertContext";
 import { useAlerts } from "@/hooks/useAlerts";
@@ -131,11 +134,17 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <AlertProvider>
-        <BrowserRouter>
-          <AuthProvider>
-            <AppWithAlerts />
-          </AuthProvider>
-        </BrowserRouter>
+        <OpportunitiesProvider>
+          <StudentGroupsProvider>
+            <SolicitationsProvider>
+              <BrowserRouter>
+                <AuthProvider>
+                  <AppWithAlerts />
+                </AuthProvider>
+              </BrowserRouter>
+            </SolicitationsProvider>
+          </StudentGroupsProvider>
+        </OpportunitiesProvider>
       </AlertProvider>
       <Toaster />
       <Sonner />

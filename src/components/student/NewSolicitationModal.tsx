@@ -20,6 +20,9 @@ import {
 import { Upload, X } from "lucide-react";
 import { activityTypes } from "@/data/mockData";
 import { useAlerts } from "@/hooks/useAlerts";
+import { useSolicitations } from "@/contexts/SolicitationsContext";
+import { useAuth } from "@/contexts/AuthContext";
+import { v4 as uuidv4 } from 'uuid';
 
 interface NewSolicitationModalProps {
   open: boolean;
@@ -31,6 +34,8 @@ export function NewSolicitationModal({
   onOpenChange,
 }: NewSolicitationModalProps) {
   const { addAlert } = useAlerts();
+  const { addSolicitation } = useSolicitations();
+  const { user } = useAuth();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [formData, setFormData] = useState({
     type: "",
@@ -90,6 +95,27 @@ export function NewSolicitationModal({
       );
       return;
     }
+
+    // Criar nova solicitação
+    const newSolicitation = {
+      id: uuidv4(),
+      activity: formData.activity,
+      type: formData.type,
+      hours: parseInt(formData.hours),
+      submitDate: new Date().toLocaleDateString('pt-BR'),
+      status: "Pendente" as const,
+      studentId: user?.id || "1",
+      studentName: user?.name || "Estudante",
+      studentMatricula: user?.matricula || "",
+      institution: formData.institution,
+      startDate: formData.startDate,
+      endDate: formData.endDate,
+      description: formData.description,
+      certificateUrl: selectedFile.name,
+    };
+
+    // Salvar no context (e localStorage)
+    addSolicitation(newSolicitation);
 
     addAlert(
       "success",

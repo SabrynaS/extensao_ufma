@@ -5,22 +5,38 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Plus, Search, Download, Eye, Filter } from "lucide-react";
-import { solicitations } from "@/data/mockData";
+import { Plus, Search, Download, Eye, Filter, X } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { NewSolicitationModal } from "@/components/student/NewSolicitationModal";
 import { SolicitationDetailsModal } from "@/components/student/SolicitationDetailsModal";
 import { useAlerts } from "@/hooks/useAlerts";
+import { useSolicitations } from "@/contexts/SolicitationsContext";
+import { useAuth } from "@/contexts/AuthContext";
 
 export default function StudentRequests() {
   const { addAlert } = useAlerts();
+  const { solicitations, updateSolicitation } = useSolicitations();
+  const { user } = useAuth();
   const [showNewSolicitation, setShowNewSolicitation] = useState(false);
   const [selectedSolicitation, setSelectedSolicitation] = useState<
     (typeof solicitations)[0] | null
   >(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [activeTab, setActiveTab] = useState("all");
+  const [showCancelConfirm, setShowCancelConfirm] = useState(false);
+  const [solicitationToCancel, setSolicitationToCancel] = useState<
+    (typeof solicitations)[0] | null
+  >(null);
 
-  const mySolicitations = solicitations.filter((s) => s.studentId === "1");
+  // Filter solicitations for current user
+  const mySolicitations = solicitations.filter((s) => s.studentId === user?.id || s.studentId === "1");
 
   const filteredSolicitations = mySolicitations.filter((s) => {
     const matchesSearch = s.activity
@@ -31,7 +47,8 @@ export default function StudentRequests() {
       (activeTab === "pending" &&
         (s.status === "Pendente" || s.status === "Em Análise")) ||
       (activeTab === "approved" && s.status === "Aprovado") ||
-      (activeTab === "rejected" && s.status === "Rejeitado");
+      (activeTab === "rejected" && s.status === "Rejeitado") ||
+      (activeTab === "canceled" && s.status === "Cancelado");
     return matchesSearch && matchesTab;
   });
 
@@ -63,8 +80,14 @@ export default function StudentRequests() {
         );
       case "Em Ajuste":
         return (
-          <Badge className="bg-warning/10 text-warning border-0">
+          <Badge className="bg-destructive/10 text-destructive border-0">
             Em Ajuste
+          </Badge>
+        );
+      case "Cancelado":
+        return (
+          <Badge className="bg-muted text-muted-foreground border-0">
+            Cancelado
           </Badge>
         );
       default:
@@ -151,6 +174,14 @@ export default function StudentRequests() {
                   }
                   )
                 </TabsTrigger>
+                <TabsTrigger value="canceled">
+                  Canceladas (
+                  {
+                    mySolicitations.filter((s) => s.status === "Cancelado")
+                      .length
+                  }
+                  )
+                </TabsTrigger>
               </TabsList>
             </Tabs>
 
@@ -201,6 +232,22 @@ export default function StudentRequests() {
                       </td>
                       <td className="py-3 px-4">
                         <div className="flex gap-2">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="gap-1"
+                            onClick={() => {
+                              addAlert(
+                                "info",
+                                "Detalhes carregados",
+                                "Visualizando detalhes da solicitação."
+                              );
+                              setSelectedSolicitation(solicitation);
+                            }}
+                          >
+                            <Eye className="w-3 h-3" />
+                            Detalhes
+                          </Button>
                           {solicitation.status === "Aprovado" && (
                             <Button
                               variant="outline"
@@ -219,22 +266,20 @@ export default function StudentRequests() {
                               Certificado
                             </Button>
                           )}
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            className="gap-1"
-                            onClick={() => {
-                              addAlert(
-                                "info",
-                                "Detalhes carregados",
-                                "Visualizando detalhes da solicitação."
-                              );
-                              setSelectedSolicitation(solicitation);
-                            }}
-                          >
-                            <Eye className="w-3 h-3" />
-                            Detalhes
-                          </Button>
+                          {solicitation.status === "Pendente" && (
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              className="gap-1 text-destructive hover:text-destructive"
+                              onClick={() => {
+                                setSolicitationToCancel(solicitation);
+                                setShowCancelConfirm(true);
+                              }}
+                            >
+                              <X className="w-3 h-3" />
+                              Cancelar
+                            </Button>
+                          )}
                         </div>
                       </td>
                     </tr>
@@ -262,6 +307,46 @@ export default function StudentRequests() {
         open={!!selectedSolicitation}
         onOpenChange={(open) => !open && setSelectedSolicitation(null)}
       />
+
+      <Dialog open={showCancelConfirm} onOpenChange={setShowCancelConfirm}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Cancelar Solicitação</DialogTitle>
+            <DialogDescription>
+              Tem certeza que deseja cancelar a solicitação "{solicitationToCancel?.activity}"? 
+              Esta ação não pode ser desfeita.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => setShowCancelConfirm(false)}
+            >
+              Não, manter
+            </Button>
+            <Button
+              variant="destructive"
+              onClick={() => {
+                if (solicitationToCancel) {
+                  updateSolicitation(solicitationToCancel.id, {
+                    ...solicitationToCancel,
+                    status: "Cancelado",
+                  });
+                  addAlert(
+                    "success",
+                    "Solicitação cancelada",
+                    `A solicitação "${solicitationToCancel.activity}" foi cancelada.`
+                  );
+                  setShowCancelConfirm(false);
+                  setSolicitationToCancel(null);
+                }
+              }}
+            >
+              Sim, cancelar
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </AppLayout>
   );
 }

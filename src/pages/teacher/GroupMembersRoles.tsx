@@ -37,7 +37,6 @@ import {
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { useToast } from "@/hooks/use-toast";
 import {
-  mockGroups,
   groupTypeLabels,
   groupMemberRoleLabels,
   type GroupMember,
@@ -47,6 +46,7 @@ import {
   mockRoleHistory,
 } from "@/data/mockData";
 import { useAuth } from "@/contexts/AuthContext";
+import { useStudentGroups } from "@/contexts/StudentGroupsContext";
 import { AppLayout } from "@/components/layout/AppLayout";
 
 const roleIcons: Record<GroupMemberRole, React.ReactNode> = {
@@ -70,7 +70,7 @@ export default function GroupMemberRoles() {
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  const [groups, setGroups] = useState<StudentGroup[]>(mockGroups);
+  const { groups, updateGroup } = useStudentGroups();
   const [selectedMember, setSelectedMember] = useState<GroupMember | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [roleHistory, setRoleHistory] = useState<RoleHistoryEntry[]>(mockRoleHistory);
@@ -116,18 +116,13 @@ export default function GroupMemberRoles() {
 
     const previousRole = selectedMember.role;
 
-    setGroups((prevGroups) =>
-      prevGroups.map((g) => {
-        if (g.responsibleTeacher.email !== user.email) return g;
-        return {
-          ...g,
-          members: g.members.map((m) =>
-            m.id === selectedMember.id ? { ...m, role: pendingRole } : m
-          ),
-          updatedAt: new Date().toISOString().split("T")[0],
-        };
-      })
-    );
+    updateGroup(group.id, {
+      ...group,
+      members: group.members.map((m) =>
+        m.id === selectedMember.id ? { ...m, role: pendingRole } : m
+      ),
+      updatedAt: new Date().toISOString().split("T")[0],
+    });
 
     const newHistoryEntry: RoleHistoryEntry = {
       id: Date.now().toString(), 

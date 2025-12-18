@@ -3,11 +3,15 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Plus, Calendar, Users, Clock, Eye, Edit, Trash2 } from "lucide-react";
-import { coordinatorOpportunities } from "@/data/mockData";
 import { useNavigate } from "react-router-dom";
+import { useOpportunities } from "@/contexts/OpportunitiesContext";
+import { useAlerts } from "@/hooks/useAlerts";
 
 export default function CoordinatorOpportunities() {
   const navigate = useNavigate();
+  const { coordinatorOpportunities, deleteCoordinatorOpportunity } = useOpportunities();
+  const { addAlert } = useAlerts();
+  
   const activeCount = coordinatorOpportunities.filter(
     (o) => o.status === "Ativo"
   ).length;
@@ -18,6 +22,11 @@ export default function CoordinatorOpportunities() {
 
   const handleCreateOpportunity = () => {
     navigate("/events/create");
+  };
+
+  const handleDeleteOpportunity = (id: string) => {
+    deleteCoordinatorOpportunity(id);
+    addAlert("success", "Oportunidade excluída", "A oportunidade foi removida com sucesso.");
   };
 
   return (
@@ -184,6 +193,7 @@ export default function CoordinatorOpportunities() {
                             variant="ghost"
                             size="icon"
                             className="h-8 w-8 text-destructive"
+                            onClick={() => handleDeleteOpportunity(o.id)}
                           >
                             <Trash2 className="w-4 h-4" />
                           </Button>

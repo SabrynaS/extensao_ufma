@@ -21,13 +21,13 @@ import { Badge } from "@/components/ui/badge";
 import { Calendar, Clock, Users, ArrowRight, ArrowLeft } from "lucide-react";
 import { useState, useEffect } from "react";
 import {
-  userCreatedOpportunities,
   Opportunity,
   mockTeachers,
 } from "@/data/mockData";
 import { Steps, StepsContent } from "@/components/ui/steps";
 import { useParams, useNavigate } from "react-router-dom";
 import { useAlerts } from "@/hooks/useAlerts";
+import { useOpportunities } from "@/contexts/OpportunitiesContext";
 
 interface FormData {
   title: string;
@@ -44,6 +44,7 @@ export default function EditEvent() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { alerts, addAlert, removeAlert } = useAlerts();
+  const { userOpportunities, updateUserOpportunity } = useOpportunities();
 
   const [formStep, setFormStep] = useState<1 | 2>(1);
   const [opportunity, setOpportunity] = useState<Opportunity | null>(null);
@@ -59,7 +60,7 @@ export default function EditEvent() {
   });
 
   useEffect(() => {
-    const found = userCreatedOpportunities.find((opp) => opp.id === id);
+    const found = userOpportunities.find((opp) => opp.id === id);
     if (found) {
       setOpportunity(found);
       setFormData({
@@ -80,7 +81,7 @@ export default function EditEvent() {
       );
       navigate("/events");
     }
-  }, [id, navigate, addAlert]);
+  }, [id, navigate, addAlert, userOpportunities]);
 
   const handleInputChange = (field: keyof FormData, value: string) => {
     setFormData((prev) => ({
@@ -164,8 +165,8 @@ export default function EditEvent() {
         description: formData.description,
       };
 
-      // Aqui você faria a chamada real para a API
-      console.log("Oportunidade atualizada:", updatedOpportunity);
+      // Update in context
+      updateUserOpportunity(opportunity.id, updatedOpportunity as Opportunity);
     }
 
     addAlert(

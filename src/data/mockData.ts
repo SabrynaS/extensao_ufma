@@ -85,7 +85,8 @@ export interface Opportunity {
     | "Vagas Esgotadas"
     | "Encerrado"
     | "Ativo"
-    | "Aprovado";
+    | "Aprovado"
+    | "Aguardando aprovação";
   validation: "Automática" | "Manual";
   period?: string;
   studentResponsible?: string;
