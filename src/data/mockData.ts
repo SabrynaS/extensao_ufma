@@ -205,8 +205,8 @@ export const users = {
   },
   student_scholar: {
     id: "5",
-    name: "Patrick Camara Araujo",
-    email: "sabryna@discente.ufma.br",
+    name: "João Pereira",
+    email: "joao@discente.ufma.br",
     role: "student_scholar",
     course: "Ciência da Computação",
   },
