@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- Fundo verde (cor da UFMA) -->
+  <rect width="200" height="200" fill="#1B5E20"/>
+  
+  <!-- Círculo branco -->
+  <circle cx="100" cy="100" r="95" fill="#FFFFFF"/>
+  
+  <!-- Letras UFMA -->
+  <text x="100" y="125" font-family="Arial, sans-serif" font-size="80" font-weight="bold" text-anchor="middle" fill="#1B5E20">U</text>
+  
+  <!-- Acento decorativo -->
+  <circle cx="100" cy="50" r="8" fill="#1B5E20"/>
+</svg>
