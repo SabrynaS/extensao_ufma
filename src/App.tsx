@@ -33,6 +33,7 @@ import TeacherProfile from "./pages/teacher/Profile";
 import { AppLayout } from "@/components/layout/AppLayout";
 import AdminUsersPage from "./pages/admin/Users";
 import { Home } from "./pages/Home";
+import CertificateValidation from "./pages/certifcates/CertificateValidation";
 
 const queryClient = new QueryClient();
 
@@ -110,6 +111,9 @@ function AppRoutes() {
           </ProtectedRoute>
         }
       />
+
+      { /* documents Route */}
+      <Route path="/certificate/validate" element={<CertificateValidation />} />
 
       <Route path="*" element={<NotFound />} />
     </Routes>

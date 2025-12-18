@@ -1,11 +1,18 @@
 import { Button } from "@/components/ui/button";
 import { GraduationCap, LogIn, Menu, X } from "lucide-react";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+
+const routes: string[] = [
+  "/opportunities",
+  "/help",
+  "/certificate/validate",
+];
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
 
   function handleNavLogin() {
     navigate("/login");
@@ -16,7 +23,9 @@ export function Header() {
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         <div className="flex items-center gap-3">
           <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary">
-            <GraduationCap className="h-6 w-6 text-primary-foreground" />
+            <Button variant="ghost" className="p-0" onClick={() => navigate("/")}>
+              <GraduationCap className="h-6 w-6 text-primary-foreground" />
+            </Button>
           </div>
           <div className="flex flex-col">
             <span className="text-lg font-bold text-foreground">Extensão UFMA</span>
@@ -25,24 +34,20 @@ export function Header() {
         </div>
 
         <nav className="hidden items-center gap-6 md:flex">
-          <a
-            href="opportunities"
-            className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-          >
-            Oportunidades
-          </a>
-          <a
-            href="help"
-            className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-          >
-            Ajuda
-          </a>
-          <a
-            href="certificate/validate"
-            className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-          >
-            Certificados
-          </a>
+          {routes.map(route => {
+            if (location.pathname === route) return;
+            return (
+              <Button
+                key={route}
+                onClick={() => navigate(route, { replace: true })}
+                variant="link"
+              >
+                {route === "/opportunities" && "Oportunidades"}
+                {route === "/help" && "Ajuda"}
+                {route === "/certificate/validate" && "Certificados"}
+              </Button>
+            );
+          })}
         </nav>
 
         <div className="hidden md:block">
@@ -67,28 +72,27 @@ export function Header() {
       {mobileMenuOpen && (
         <div className="border-t border-border bg-background md:hidden">
           <nav className="container mx-auto flex flex-col gap-4 px-4 py-4">
-            <a
-              href="opportunities"
-              className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+            {routes.map(route => {
+              if (location.pathname === route) return;
+              return (
+                <Button
+                  onClick={() => navigate(route, { replace: true })}
+                  variant="link"
+                >
+                  {route === "/opportunities" && "Oportunidades"}
+                  {route === "/help" && "Ajuda"}
+                  {route === "/certificate/validate" && "Certificados"}
+                </Button>
+              );
+            })}
+      
+            <Button
+              onClick={handleNavLogin}
+              variant="default"
             >
-              Oportunidades
-            </a>
-            <a
-              href="help"
-              className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-            >
-              Ajuda
-            </a>
-            <a
-              href="certificate/validate"
-              className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-            >
-              Certificados
-            </a>
-            <a href="login" className="w-full">
               <LogIn className="h-4 w-4" />
               Entrar
-            </a>
+            </Button>
           </nav>
         </div>
       )}
