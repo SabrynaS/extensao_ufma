@@ -149,14 +149,7 @@ export default function StudentDashboard() {
         <div className="grid grid-cols-3 gap-4">
           <Card
             className="cursor-pointer hover:border-primary/50 transition-colors"
-            onClick={() => {
-              addAlert(
-                "info",
-                "Nova solicitação",
-                "Abrindo formulário para nova solicitação."
-              );
-              setShowNewSolicitation(true);
-            }}
+            onClick={() => navigate("/student/register-external-activity")}
           >
             <CardContent className="p-6 flex flex-col items-center text-center">
               <div className="w-12 h-12 rounded-full bg-warning/10 flex items-center justify-center mb-3">
@@ -279,11 +272,6 @@ export default function StudentDashboard() {
                             size="sm"
                             className="gap-1"
                             onClick={() => {
-                              addAlert(
-                                "info",
-                                "Detalhes carregados",
-                                "Visualizando detalhes da solicitação."
-                              );
                               // Aqui abriria modal de detalhes
                             }}
                           >

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { AppLayout } from "@/components/layout/AppLayout";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -21,6 +22,7 @@ import { useSolicitations } from "@/contexts/SolicitationsContext";
 import { useAuth } from "@/contexts/AuthContext";
 
 export default function StudentRequests() {
+  const navigate = useNavigate();
   const { addAlert } = useAlerts();
   const { solicitations, updateSolicitation } = useSolicitations();
   const { user } = useAuth();
@@ -108,14 +110,7 @@ export default function StudentRequests() {
             </p>
           </div>
           <Button
-            onClick={() => {
-              addAlert(
-                "info",
-                "Nova solicitação",
-                "Abrindo formulário para nova solicitação."
-              );
-              setShowNewSolicitation(true);
-            }}
+            onClick={() => navigate("/student/register-external-activity")}
           >
             <Plus className="w-4 h-4 mr-2" />
             Nova Solicitação
@@ -237,11 +232,6 @@ export default function StudentRequests() {
                             size="sm"
                             className="gap-1"
                             onClick={() => {
-                              addAlert(
-                                "info",
-                                "Detalhes carregados",
-                                "Visualizando detalhes da solicitação."
-                              );
                               setSelectedSolicitation(solicitation);
                             }}
                           >

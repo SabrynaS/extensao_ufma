@@ -40,6 +40,7 @@ import { PublicOpportunities } from "./pages/PublicOpportunities";
 import Help from "./pages/Help";
 import CertificatesPage from "./pages/Certificates";
 import NotificationsPage from "./pages/Notifications";
+import RegisterExternalActivityPage from "./pages/student/RegisterExternalActivity";
 
 const queryClient = new QueryClient();
 
@@ -86,6 +87,7 @@ function AppRoutes() {
       <Route path="/student/requests" element={<ProtectedRoute><StudentRequests /></ProtectedRoute>} />
       <Route path="/student/certificates" element={<ProtectedRoute><StudentCertificates /></ProtectedRoute>} />
       <Route path="/student/profile" element={<ProtectedRoute><StudentProfile /></ProtectedRoute>} />
+      <Route path="/student/register-external-activity" element={<ProtectedRoute><RegisterExternalActivityPage /></ProtectedRoute>} />
       <Route path="/notifications" element={<ProtectedRoute><NotificationsPage /></ProtectedRoute>} />
 
       {/* Coordinator Routes */}
