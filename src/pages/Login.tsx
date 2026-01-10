@@ -143,6 +143,17 @@ const Login: React.FC = () => {
                 Criar conta
               </button>
             </div>
+
+            <div className="pt-4 border-t">
+              <Button 
+                type="button"
+                variant="outline" 
+                className="w-full"
+                onClick={() => navigate("/")}
+              >
+                Ir para tela de Inicio
+              </Button>
+            </div>
           </form>
         </CardContent>
       </Card>

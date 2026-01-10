@@ -11,12 +11,14 @@ import { studentProgress, solicitations, certificates } from "@/data/mockData";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { NewSolicitationModal } from "@/components/student/NewSolicitationModal";
+import { SolicitationDetailsModal } from "@/components/student/SolicitationDetailsModal";
 import { useAlerts } from "@/hooks/useAlerts";
 
 export default function StudentDashboard() {
   const navigate = useNavigate();
   const { addAlert } = useAlerts();
   const [showNewSolicitation, setShowNewSolicitation] = useState(false);
+  const [selectedSolicitation, setSelectedSolicitation] = useState<typeof solicitations[0] | null>(null);
 
   const mySolicitations = solicitations
     .filter((s) => s.studentId === "1")
@@ -284,7 +286,7 @@ export default function StudentDashboard() {
                             size="sm"
                             className="gap-1"
                             onClick={() => {
-                              // Aqui abriria modal de detalhes
+                              setSelectedSolicitation(solicitation);
                             }}
                           >
                             <Eye className="w-3 h-3" />
@@ -314,6 +316,13 @@ export default function StudentDashboard() {
         open={showNewSolicitation}
         onOpenChange={setShowNewSolicitation}
       />
+      {selectedSolicitation && (
+        <SolicitationDetailsModal
+          solicitation={selectedSolicitation}
+          open={!!selectedSolicitation}
+          onOpenChange={(open) => !open && setSelectedSolicitation(null)}
+        />
+      )}
     </AppLayout>
   );
 }
