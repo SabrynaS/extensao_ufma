@@ -36,6 +36,9 @@ import TeacherProfile from "./pages/teacher/Profile";
 import { AppLayout } from "@/components/layout/AppLayout";
 import AdminUsersPage from "./pages/admin/Users";
 import { Home } from "./pages/Home";
+import { PublicOpportunities } from "./pages/PublicOpportunities";
+import Help from "./pages/Help";
+import CertificatesPage from "./pages/Certificates";
 
 const queryClient = new QueryClient();
 
@@ -73,6 +76,9 @@ function AppRoutes() {
       />
       <Route path="/" element={<Home />} />
       <Route path="/sign-up" element={<SignUp />} />
+      <Route path="/opportunities" element={<PublicOpportunities />} />
+      <Route path="/help" element={<Help />} />
+      <Route path="/certificate/validate" element={<CertificatesPage />} />
 
       {/* Student Routes */}
       <Route path="/student" element={<ProtectedRoute><StudentDashboard /></ProtectedRoute>} />
