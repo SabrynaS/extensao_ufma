@@ -1,5 +1,3 @@
-import { GraduationCap } from "lucide-react";
-
 export function Footer() {
   return (
     <footer className="border-t border-border bg-card">
@@ -7,7 +5,7 @@ export function Footer() {
         <div className="flex flex-col items-center justify-center gap-4 text-center">
           <div className="flex items-center gap-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary">
-              <GraduationCap className="h-6 w-6 text-primary-foreground" />
+              <img src="/logoUfma.png" alt="Logo UFMA" className="h-8 w-8 object-contain" />
             </div>
             <div>
               <span className="text-lg font-bold text-card-foreground">

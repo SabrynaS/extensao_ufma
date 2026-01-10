@@ -11,7 +11,6 @@ import {
   Settings,
   Bell,
   LogOut,
-  GraduationCap,
   CalendarIcon,
   Network,
 } from "lucide-react";
@@ -162,7 +161,7 @@ export default function AppSidebar() {
       <div className="p-4 border-b border-sidebar-border">
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 rounded-lg bg-sidebar-primary flex items-center justify-center">
-            <GraduationCap className="w-5 h-5 text-sidebar-primary-foreground" />
+            <img src="/logoUfma.png" alt="Logo UFMA" className="w-6 h-6 object-contain" />
           </div>
           <div>
             <h1 className="font-semibold text-sm">Extensão UFMA</h1>

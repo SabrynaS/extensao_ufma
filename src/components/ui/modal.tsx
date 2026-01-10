@@ -1,4 +1,4 @@
-import { CheckCircle, GraduationCap, XCircle } from "lucide-react";
+import { CheckCircle, XCircle } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./card";
 import { Button } from "react-day-picker";
 

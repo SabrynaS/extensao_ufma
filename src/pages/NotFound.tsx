@@ -1,6 +1,5 @@
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
-import { GraduationCap } from "lucide-react";
 
 const NotFound = () => {
   const location = useLocation();
@@ -15,7 +14,7 @@ const NotFound = () => {
       <header className="bg-card border-b border-border px-6 py-4">
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
-            <GraduationCap className="w-5 h-5 text-primary-foreground" />
+            <img src="/logoUfma.png" alt="Logo UFMA" className="w-6 h-6 object-contain" />
           </div>
           <div>
             <h1 className="font-semibold text-sm">Extensão UFMA</h1>
