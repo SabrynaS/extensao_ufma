@@ -22,6 +22,10 @@ export function AppHeader({ breadcrumb }: AppHeaderProps) {
     navigate('/login');
   };
 
+  const handleNotifications = () => {
+    navigate('/notifications');
+  };
+
   return (
     <header className="h-14 border-b border-border bg-card flex items-center justify-between px-6">
       {/* Breadcrumb */}
@@ -38,12 +42,15 @@ export function AppHeader({ breadcrumb }: AppHeaderProps) {
 
       {/* User section */}
       <div className="flex items-center gap-4">
-        <Button variant="ghost" size="icon" className="relative">
+        <button 
+          onClick={handleNotifications}
+          className="relative p-2 rounded-lg hover:bg-muted transition-colors"
+        >
           <Bell className="w-5 h-5" />
           <span className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full bg-destructive text-destructive-foreground text-[10px] flex items-center justify-center">
             2
           </span>
-        </Button>
+        </button>
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

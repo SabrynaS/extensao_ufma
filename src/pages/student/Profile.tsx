@@ -70,7 +70,7 @@ export default function StudentProfile() {
                 </div>
               </div>
               <div className="flex items-center gap-3 p-3 bg-muted rounded-lg">
-                <GraduationCap className="w-5 h-5 text-muted-foreground" />
+                <img src="/logoUfma.png" alt="Logo UFMA" className="w-5 h-5 object-contain" />
                 <div>
                   <p className="text-xs text-muted-foreground">Curso</p>
                   <p className="font-medium">{user?.course}</p>

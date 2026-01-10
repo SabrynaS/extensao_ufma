@@ -17,7 +17,7 @@ export function Modal({ isOpen, onClose, children, icon }: Props) {
       <Card className="w-full max-w-sm transform transition-all duration-300 scale-100" onClick={(e) => e.stopPropagation()}>
         <CardHeader className="text-center space-y-4">
           <div className="mx-auto w-16 h-16 rounded-2xl bg-primary flex items-center justify-center">
-            <GraduationCap className="w-8 h-8 text-primary-foreground" />
+            <img src="/logoUfma.png" alt="Logo UFMA" className="w-8 h-8 object-contain" />
           </div>
           <div>
             <CardTitle className="text-2xl text-primary">Extensão UFMA</CardTitle>
