@@ -3,7 +3,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
-import { Users, CheckCircle, TrendingUp, Clock, BarChart3, Download } from 'lucide-react';
+import { Users, Award, TrendingUp, Clock, BarChart3, Download } from 'lucide-react';
 import { coordinatorStats, reportData } from '@/data/mockData';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
@@ -14,7 +14,7 @@ export default function CoordinatorReports() {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-bold text-primary">Relatórios e Métricas</h1>
-            <p className="text-muted-foreground">Análise completa do desempenho e estatísticas do curso (RF033, RF034, RF067)</p>
+            <p className="text-muted-foreground">Análise completa do desempenho e estatísticas do curso </p>
           </div>
           <Select defaultValue="2025.2">
             <SelectTrigger className="w-32">
@@ -41,7 +41,7 @@ export default function CoordinatorReports() {
           <Card className="border-success/20 bg-success/5"><CardContent className="p-4">
             <div className="flex items-center justify-between mb-2">
               <span className="text-sm text-muted-foreground">Concluíram</span>
-              <CheckCircle className="w-4 h-4 text-success" />
+              <Award className="w-4 h-4 text-success" />
             </div>
             <p className="text-2xl font-bold text-success">{coordinatorStats.concluded}</p>
             <p className="text-xs text-muted-foreground">100% das horas</p>
