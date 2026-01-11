@@ -288,7 +288,7 @@ export default function EditOpportunity() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="instructor">Instrutor/Professor Responsável *</Label>
+                  <Label htmlFor="instructor">Responsável *</Label>
                   <Input
                     id="instructor"
                     value={formData.instructor}

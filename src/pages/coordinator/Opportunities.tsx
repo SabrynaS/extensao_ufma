@@ -170,7 +170,7 @@ export default function CoordinatorOpportunities() {
         <Card>
           <CardContent className="p-6">
             <div className="mb-6">
-              <h3 className="font-semibold mb-4">Minhas Oportunidades Criadas</h3>
+              <h3 className="font-semibold mb-4">Oportunidades</h3>
               <p className="text-sm text-muted-foreground mb-4">
                 Gerencie as oportunidades publicadas e acompanhe as inscrições
               </p>
@@ -439,7 +439,7 @@ export default function CoordinatorOpportunities() {
                 <h4 className="font-semibold text-sm text-muted-foreground mb-3">Responsáveis</h4>
                 <div className="space-y-2">
                   <div>
-                    <p className="text-xs text-muted-foreground">Instrutor/Professor</p>
+                    <p className="text-xs text-muted-foreground">Responsável</p>
                     <p className="text-sm font-medium">{selectedOpportunity.instructor || '-'}</p>
                   </div>
                   {selectedOpportunity.studentResponsible && (

@@ -10,17 +10,19 @@ import {
   FileText,
   AlertTriangle,
   CheckCircle,
+  Share2,
 } from "lucide-react";
-import { solicitations } from "@/data/mockData";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAlerts } from "@/hooks/useAlerts";
+import { useSolicitations } from "@/contexts/SolicitationsContext";
 
 export default function CoordinatorApprovals() {
   const [searchQuery, setSearchQuery] = useState("");
   const [activeTab, setActiveTab] = useState("all");
   const { addAlert } = useAlerts();
   const navigate = useNavigate();
+  const { solicitations } = useSolicitations();
 
   const pendingSolicitations = solicitations.filter(
     (s) => s.status === "Pendente" || s.status === "Em Ajuste"
@@ -43,13 +45,19 @@ export default function CoordinatorApprovals() {
   return (
     <AppLayout breadcrumb={["Início", "Solicitações de Validação"]}>
       <div className="space-y-6">
-        <div>
-          <h1 className="text-2xl font-bold text-primary">
-            Solicitações de Validação
-          </h1>
-          <p className="text-muted-foreground">
-            Solicitações aguardando análise e validação da coordenação
-          </p>
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-2xl font-bold text-primary">
+              Solicitações de Validação
+            </h1>
+            <p className="text-muted-foreground">
+              Solicitações aguardando análise e validação da coordenação
+            </p>
+          </div>
+          <Button onClick={() => navigate("/coordinator/approvals/delegate")} className="gap-2">
+            <Share2 className="w-4 h-4" />
+            Delegar Solicitações
+          </Button>
         </div>
         
         <Card>

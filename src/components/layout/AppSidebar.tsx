@@ -51,6 +51,7 @@ const coordinatorNavItems: NavItem[] = [
     icon: ClipboardList,
     path: "/coordinator/approvals",
   },
+  { title: "Gerenciar Comissão", icon: Users, path: "/coordinator/commission" },
   { title: "Gerenciar Alunos", icon: Users, path: "/coordinator/students" },
   { title: "Gerenciar Grupos", icon: Network, path: "/coordinator/groups" },
   {

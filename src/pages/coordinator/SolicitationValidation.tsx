@@ -11,14 +11,15 @@ import {
 } from "@/components/ui/dialog";
 import { useNavigate, useParams } from "react-router-dom";
 import { ArrowLeft, CheckCircle, XCircle, Download, FileText } from "lucide-react";
-import { solicitations } from "@/data/mockData";
 import { useState } from "react";
 import { useAlerts } from "@/hooks/useAlerts";
+import { useSolicitations } from "@/contexts/SolicitationsContext";
 
 export default function SolicitationValidation() {
   const navigate = useNavigate();
   const { id } = useParams();
   const { addAlert } = useAlerts();
+  const { solicitations } = useSolicitations();
   const [decision, setDecision] = useState<"approve" | "reject" | null>(null);
   const [feedback, setFeedback] = useState("");
   const [showCertificateModal, setShowCertificateModal] = useState(false);

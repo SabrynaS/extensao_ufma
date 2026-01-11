@@ -7,6 +7,7 @@ import { AuthProvider, useAuth } from "@/contexts/AuthContext";
 import { OpportunitiesProvider } from "@/contexts/OpportunitiesContext";
 import { StudentGroupsProvider } from "@/contexts/StudentGroupsContext";
 import { SolicitationsProvider } from "@/contexts/SolicitationsContext";
+import { CommissionProvider } from "@/contexts/CommissionContext";
 import { AlertsContainer } from "@/components/AlertsContainer";
 import { AlertProvider } from "@/contexts/AlertContext";
 import { useAlerts } from "@/hooks/useAlerts";
@@ -26,6 +27,8 @@ import StudentHistory from "./pages/coordinator/StudentHistory";
 import CoordinatorOpportunities from "./pages/coordinator/Opportunities";
 import CreateOpportunity from "./pages/coordinator/CreateOpportunity";
 import EditOpportunity from "./pages/coordinator/EditOpportunity";
+import DelegateSolicitations from "./pages/coordinator/DelegateSolicitations";
+import CommissionManagement from "./pages/coordinator/CommissionManagement";
 import CoordinatorSettings from "./pages/coordinator/Settings";
 import CoordinatorAlerts from "./pages/coordinator/Alerts";
 import CreateEvent from "./pages/events/CreateEvent";
@@ -98,6 +101,8 @@ function AppRoutes() {
       <Route path="/coordinator" element={<ProtectedRoute><CoordinatorReports /></ProtectedRoute>} />
       <Route path="/coordinator/approvals" element={<ProtectedRoute><CoordinatorApprovals /></ProtectedRoute>} />
       <Route path="/coordinator/approvals/:id" element={<ProtectedRoute><SolicitationValidation /></ProtectedRoute>} />
+      <Route path="/coordinator/approvals/delegate" element={<ProtectedRoute><DelegateSolicitations /></ProtectedRoute>} />
+      <Route path="/coordinator/commission" element={<ProtectedRoute><CommissionManagement /></ProtectedRoute>} />
       <Route path="/coordinator/students" element={<ProtectedRoute><CoordinatorStudents /></ProtectedRoute>} />
       <Route path="/coordinator/students/:id/history" element={<ProtectedRoute><StudentHistory /></ProtectedRoute>} />
       <Route path="/coordinator/reports" element={<ProtectedRoute><CoordinatorReports /></ProtectedRoute>} />
@@ -155,11 +160,13 @@ const App = () => (
         <OpportunitiesProvider>
           <StudentGroupsProvider>
             <SolicitationsProvider>
-              <BrowserRouter>
-                <AuthProvider>
-                  <AppWithAlerts />
-                </AuthProvider>
-              </BrowserRouter>
+              <CommissionProvider>
+                <BrowserRouter>
+                  <AuthProvider>
+                    <AppWithAlerts />
+                  </AuthProvider>
+                </BrowserRouter>
+              </CommissionProvider>
             </SolicitationsProvider>
           </StudentGroupsProvider>
         </OpportunitiesProvider>

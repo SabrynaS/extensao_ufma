@@ -69,6 +69,7 @@ export interface Solicitation {
   certificateUrl?: string;
   deadlineDays?: number;
   urgent?: boolean;
+  delegatedTo?: string; // ID do membro da comissão que está ajudando
 }
 
 export interface Opportunity {
@@ -465,6 +466,15 @@ export const mockTeachers = [
   { id: "t3", name: "Prof. Roberto Campos", email: "roberto.campos@ufma.br" },
   { id: "t4", name: "Dr. Marcos Antônio Reis", email: "marcos.reis@ufma.br" },
   { id: "t5", name: "Dra. Patricia Nogueira", email: "patricia.nogueira@ufma.br" },
+];
+
+// Membros da Comissão de Validação
+export const commissionMembers = [
+  { id: "cm1", name: "Prof. Dr. Carlos Eduardo Silva", email: "carlos.silva@ufma.br", role: "docente" },
+  { id: "cm2", name: "Dra. Fernanda Lima", email: "fernanda.lima@ufma.br", role: "docente" },
+  { id: "cm3", name: "Prof. Roberto Campos", email: "roberto.campos@ufma.br", role: "docente" },
+  { id: "cm4", name: "Dr. Humberto Silva", email: "humberto.silva@ufma.br", role: "comissao" },
+  { id: "cm5", name: "Dra. Patricia Nogueira", email: "patricia.nogueira@ufma.br", role: "docente" },
 ];
 
 export const mockStudents = [

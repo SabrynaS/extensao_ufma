@@ -8,6 +8,7 @@ interface SolicitationsContextType {
   updateSolicitation: (id: string, solicitation: Solicitation) => void;
   deleteSolicitation: (id: string) => void;
   getSolicitationById: (id: string) => Solicitation | undefined;
+  updateSolicitationDelegation: (ids: string[], delegatedTo: string) => void;
 }
 
 const SolicitationsContext = createContext<SolicitationsContextType | undefined>(undefined);
@@ -57,6 +58,12 @@ export const SolicitationsProvider = ({ children }: { children: ReactNode }) => 
     return solicitations.find((s) => s.id === id);
   };
 
+  const updateSolicitationDelegation = (ids: string[], delegatedTo: string) => {
+    setSolicitations((prev) =>
+      prev.map((s) => (ids.includes(s.id) ? { ...s, delegatedTo } : s))
+    );
+  };
+
   return (
     <SolicitationsContext.Provider
       value={{
@@ -65,6 +72,7 @@ export const SolicitationsProvider = ({ children }: { children: ReactNode }) => 
         updateSolicitation,
         deleteSolicitation,
         getSolicitationById,
+        updateSolicitationDelegation,
       }}
     >
       {children}
