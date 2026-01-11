@@ -62,6 +62,7 @@ export interface Solicitation {
   studentName: string;
   studentMatricula: string;
   institution?: string;
+  year?: string;
   startDate?: string;
   endDate?: string;
   description?: string;
@@ -347,8 +348,10 @@ export const solicitations: Solicitation[] = [
     studentName: "Ana Souza",
     studentMatricula: "2021001234",
     institution: "Universidade Federal do Maranhão",
+    year: "2025",
     startDate: "2025-10-01",
     endDate: "2025-11-15",
+    certificateUrl: "certificado_Ana Souza.pdf",
     deadlineDays: 2,
   },
   {
@@ -362,6 +365,10 @@ export const solicitations: Solicitation[] = [
     studentName: "Ana Souza",
     studentMatricula: "2021001234",
     institution: "SEBRAE",
+    year: "2025",
+    startDate: "2025-11-20",
+    endDate: "2025-11-22",
+    certificateUrl: "certificado_Ana Souza.pdf",
     deadlineDays: 8,
   },
   {
@@ -374,6 +381,11 @@ export const solicitations: Solicitation[] = [
     studentId: "3",
     studentName: "Carlos Lima",
     studentMatricula: "2023005",
+    institution: "UFMA",
+    year: "2025",
+    startDate: "2025-11-10",
+    endDate: "2025-11-14",
+    certificateUrl: "certificado_Carlos Lima.pdf",
     deadlineDays: 8,
   },
   {
@@ -386,6 +398,11 @@ export const solicitations: Solicitation[] = [
     studentId: "4",
     studentName: "Maria Santos",
     studentMatricula: "2022015",
+    institution: "Secretaria de Ação Social",
+    year: "2025",
+    startDate: "2025-08-01",
+    endDate: "2025-10-31",
+    certificateUrl: "certificado_Maria Santos.pdf",
     deadlineDays: 1,
     urgent: true,
   },
@@ -399,6 +416,11 @@ export const solicitations: Solicitation[] = [
     studentId: "5",
     studentName: "João Silva",
     studentMatricula: "2023012",
+    institution: "Instituto Inclusão Brasil",
+    year: "2025",
+    startDate: "2025-09-15",
+    endDate: "2025-09-17",
+    certificateUrl: "certificado_João Silva.pdf",
     deadlineDays: 5,
   },
   {
@@ -411,6 +433,11 @@ export const solicitations: Solicitation[] = [
     studentId: "6",
     studentName: "Beatriz Costa",
     studentMatricula: "2021078",
+    institution: "UFMA - Departamento de Computação",
+    year: "2025",
+    startDate: "2025-08-15",
+    endDate: "2025-12-10",
+    certificateUrl: "certificado_Beatriz Costa.pdf",
     deadlineDays: 3,
   },
   {
@@ -423,6 +450,11 @@ export const solicitations: Solicitation[] = [
     studentId: "1",
     studentName: "Ana Souza",
     studentMatricula: "2021001234",
+    institution: "UFMA",
+    year: "2025",
+    startDate: "2025-10-25",
+    endDate: "2025-10-27",
+    certificateUrl: "certificado_Ana Souza.pdf",
     deadlineDays: 4,
   },
 ];

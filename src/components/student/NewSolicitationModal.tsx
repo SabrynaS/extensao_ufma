@@ -108,6 +108,7 @@ export function NewSolicitationModal({
       studentName: user?.name || "Estudante",
       studentMatricula: user?.matricula || "",
       institution: formData.institution,
+      year: formData.year,
       startDate: formData.startDate,
       endDate: formData.endDate,
       description: formData.description,

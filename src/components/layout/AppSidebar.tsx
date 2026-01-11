@@ -47,7 +47,7 @@ const studentNavItems: NavItem[] = [
 const coordinatorNavItems: NavItem[] = [
   { title: "Painel Geral", icon: LayoutDashboard, path: "/coordinator" },
   {
-    title: "Fila de Aprovações",
+    title: "Solicitações de Validação",
     icon: ClipboardList,
     path: "/coordinator/approvals",
   },
