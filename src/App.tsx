@@ -22,6 +22,7 @@ import CoordinatorReports from "./pages/coordinator/Reports";
 import CoordinatorApprovals from "./pages/coordinator/Approvals";
 import SolicitationValidation from "./pages/coordinator/SolicitationValidation";
 import CoordinatorStudents from "./pages/coordinator/Students";
+import StudentHistory from "./pages/coordinator/StudentHistory";
 import CoordinatorOpportunities from "./pages/coordinator/Opportunities";
 import CoordinatorSettings from "./pages/coordinator/Settings";
 import CoordinatorAlerts from "./pages/coordinator/Alerts";
@@ -96,6 +97,7 @@ function AppRoutes() {
       <Route path="/coordinator/approvals" element={<ProtectedRoute><CoordinatorApprovals /></ProtectedRoute>} />
       <Route path="/coordinator/approvals/:id" element={<ProtectedRoute><SolicitationValidation /></ProtectedRoute>} />
       <Route path="/coordinator/students" element={<ProtectedRoute><CoordinatorStudents /></ProtectedRoute>} />
+      <Route path="/coordinator/students/:id/history" element={<ProtectedRoute><StudentHistory /></ProtectedRoute>} />
       <Route path="/coordinator/reports" element={<ProtectedRoute><CoordinatorReports /></ProtectedRoute>} />
       <Route path="/coordinator/opportunities" element={<ProtectedRoute><CoordinatorOpportunities /></ProtectedRoute>} />
       <Route path="/coordinator/settings" element={<ProtectedRoute><CoordinatorSettings /></ProtectedRoute>} />

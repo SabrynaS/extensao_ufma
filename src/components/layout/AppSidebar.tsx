@@ -54,11 +54,6 @@ const coordinatorNavItems: NavItem[] = [
   { title: "Gerenciar Alunos", icon: Users, path: "/coordinator/students" },
   { title: "Gerenciar Grupos", icon: Network, path: "/coordinator/groups" },
   {
-    title: "Relatórios e Métricas",
-    icon: BarChart3,
-    path: "/coordinator/reports",
-  },
-  {
     title: "Gerenciar Oportunidades",
     icon: Search,
     path: "/coordinator/opportunities",

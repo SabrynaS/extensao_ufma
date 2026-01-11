@@ -103,7 +103,7 @@ export interface Student {
   approvedHours: number;
   pendingHours: number;
   totalRequired: number;
-  status: "Regular" | "Crítico (Abaixo da média)" | "Atenção" | "Concluído";
+  status: "Regular" | "Crítico (Abaixo da média)" | "Concluído";
   progress: number;
 }
 
@@ -620,7 +620,7 @@ export const students: Student[] = [
     approvedHours: 45,
     pendingHours: 15,
     totalRequired: 300,
-    status: "Atenção",
+    status: "Crítico (Abaixo da média)",
     progress: 15,
   },
   {
@@ -650,7 +650,7 @@ export const students: Student[] = [
     approvedHours: 90,
     pendingHours: 30,
     totalRequired: 300,
-    status: "Atenção",
+    status: "Crítico (Abaixo da média)",
     progress: 30,
   },
 ];

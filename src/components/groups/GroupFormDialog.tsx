@@ -171,7 +171,7 @@ export function GroupFormDialog({
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="coordinator">Discente Coordenador</Label>
+            <Label htmlFor="coordinator">Discente Diretor</Label>
             <Select
               value={formData.coordinatorId}
               onValueChange={(value) =>
@@ -179,7 +179,7 @@ export function GroupFormDialog({
               }
             >
               <SelectTrigger>
-                <SelectValue placeholder="Selecione o coordenador" />
+                <SelectValue placeholder="Selecione o discente" />
               </SelectTrigger>
               <SelectContent className="bg-popover">
                 {mockStudents.map((student) => (
