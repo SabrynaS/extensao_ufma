@@ -24,6 +24,8 @@ import SolicitationValidation from "./pages/coordinator/SolicitationValidation";
 import CoordinatorStudents from "./pages/coordinator/Students";
 import StudentHistory from "./pages/coordinator/StudentHistory";
 import CoordinatorOpportunities from "./pages/coordinator/Opportunities";
+import CreateOpportunity from "./pages/coordinator/CreateOpportunity";
+import EditOpportunity from "./pages/coordinator/EditOpportunity";
 import CoordinatorSettings from "./pages/coordinator/Settings";
 import CoordinatorAlerts from "./pages/coordinator/Alerts";
 import CreateEvent from "./pages/events/CreateEvent";
@@ -100,6 +102,8 @@ function AppRoutes() {
       <Route path="/coordinator/students/:id/history" element={<ProtectedRoute><StudentHistory /></ProtectedRoute>} />
       <Route path="/coordinator/reports" element={<ProtectedRoute><CoordinatorReports /></ProtectedRoute>} />
       <Route path="/coordinator/opportunities" element={<ProtectedRoute><CoordinatorOpportunities /></ProtectedRoute>} />
+      <Route path="/coordinator/opportunities/create" element={<ProtectedRoute><CreateOpportunity /></ProtectedRoute>} />
+      <Route path="/coordinator/opportunities/edit/:id" element={<ProtectedRoute><EditOpportunity /></ProtectedRoute>} />
       <Route path="/coordinator/settings" element={<ProtectedRoute><CoordinatorSettings /></ProtectedRoute>} />
       <Route path="/coordinator/alerts" element={<ProtectedRoute><CoordinatorAlerts /></ProtectedRoute>} />
       <Route path="/coordinator/groups" element={<ProtectedRoute><GroupsManagement /></ProtectedRoute>} />
