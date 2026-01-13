@@ -312,7 +312,7 @@ export const mockGroups: StudentGroup[] = [
   },
   {
     id: '4',
-    name: 'Liga de Oncologia',
+    name: 'PETComp UFMA',
     description: 'Liga acadêmica focada em estudos oncológicos e cuidados paliativos.',
     email: 'liga.onco@ufma.br',
     type: 'liga',
