@@ -39,7 +39,6 @@ import GroupMemberRoles from "./pages/teacher/GroupMembersRoles";
 import MyGroups from "./pages/teacher/MyGroups";
 import TeacherDashboard from "./pages/teacher/Dashboard";
 import TeacherOpportunities from "./pages/teacher/Opportunities";
-import TeacherReports from "./pages/teacher/Reports";
 import TeacherProfile from "./pages/teacher/Profile";
 import { AppLayout } from "@/components/layout/AppLayout";
 import AdminUsersPage from "./pages/admin/Users";
@@ -321,14 +320,6 @@ function AppRoutes() {
         element={
           <ProtectedRoute>
             <TeacherOpportunities />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/teacher/reports"
-        element={
-          <ProtectedRoute>
-            <TeacherReports />
           </ProtectedRoute>
         }
       />

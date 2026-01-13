@@ -7,7 +7,7 @@ const roleLabels: Record<string, string> = {
   secretaria: "Secretária",
   admin: "Administrador",
   comissao: "Comissão",
-  student_scholar: "Bolsista",
+  student_scholar: "Diretor",
 };
 
 export default function MockProfiles() {
