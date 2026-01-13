@@ -48,6 +48,7 @@ import Help from "./pages/Help";
 import CertificatesPage from "./pages/Certificates";
 import NotificationsPage from "./pages/Notifications";
 import RegisterExternalActivityPage from "./pages/student/RegisterExternalActivity";
+import PapeisPage from "./pages/Papeis";
 
 const queryClient = new QueryClient();
 
@@ -86,6 +87,7 @@ function AppRoutes() {
       <Route path="/" element={<Home />} />
       <Route path="/sign-up" element={<SignUp />} />
       <Route path="/opportunities" element={<PublicOpportunities />} />
+      <Route path="/papeis" element={<PapeisPage />} />
       <Route path="/help" element={<Help />} />
       <Route path="/certificate/validate" element={<CertificatesPage />} />
 
