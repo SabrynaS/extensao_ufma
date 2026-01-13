@@ -32,7 +32,7 @@ export function HeroSection() {
           {/* Description */}
           <p className="mb-12 animate-fade-in text-lg text-foreground/80 [animation-delay:200ms] sm:text-xl max-w-2xl mx-auto leading-relaxed font-medium">
             Conectando a universidade à comunidade através de projetos, cursos e ações
-            extensionistas que <span className="text-primary font-bold">transformam realidades</span> e constroem um futuro melhor.
+            extensionistas que <span className="text-lg ">transformam realidades</span> e constroem um futuro melhor.
           </p>
 
           {/* CTA Button */}

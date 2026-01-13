@@ -1,22 +1,23 @@
-import { AppLayout } from '@/components/layout/AppLayout';
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
+import { AppLayout } from "@/components/layout/AppLayout";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { useNavigate } from 'react-router-dom';
-import { ArrowLeft } from 'lucide-react';
-import { useState } from 'react';
-import { useAlerts } from '@/hooks/useAlerts';
-import { useOpportunities } from '@/contexts/OpportunitiesContext';
-import { v4 as uuidv4 } from 'uuid';
+} from "@/components/ui/select";
+import { useNavigate } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
+import { useState } from "react";
+import { useAlerts } from "@/hooks/useAlerts";
+import { useOpportunities } from "@/contexts/OpportunitiesContext";
+import { mockGroups, mockTeachers, mockStudents } from "@/data/mockData";
+import { v4 as uuidv4 } from "uuid";
 
 export default function CreateOpportunityPage() {
   const navigate = useNavigate();
@@ -24,28 +25,44 @@ export default function CreateOpportunityPage() {
   const { addCoordinatorOpportunity } = useOpportunities();
 
   const [formData, setFormData] = useState({
-    title: '',
-    type: '',
-    description: '',
-    hours: '',
-    slots: '',
-    instructor: '',
-    validation: 'Manual',
-    startDate: '',
-    endDate: '',
-    studentResponsible: '',
-    period: '',
+    title: "",
+    type: "",
+    description: "",
+    hours: "",
+    slots: "",
+    instructor: "",
+    validation: "Manual",
+    startDate: "",
+    endDate: "",
+    studentResponsible: "",
+    period: "",
+    linkedGroup: "",
   });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     // Validar campos obrigatórios
-    const requiredFields = ['title', 'type', 'description', 'hours', 'slots', 'instructor', 'startDate', 'endDate'];
-    const emptyFields = requiredFields.filter(field => !formData[field as keyof typeof formData]);
+    const requiredFields = [
+      "title",
+      "type",
+      "description",
+      "hours",
+      "slots",
+      "instructor",
+      "startDate",
+      "endDate",
+    ];
+    const emptyFields = requiredFields.filter(
+      (field) => !formData[field as keyof typeof formData]
+    );
 
     if (emptyFields.length > 0) {
-      addAlert('error', 'Campos obrigatórios', 'Todos os campos marcados com * são obrigatórios.');
+      addAlert(
+        "error",
+        "Campos obrigatórios",
+        "Todos os campos marcados com * são obrigatórios."
+      );
       return;
     }
 
@@ -53,15 +70,20 @@ export default function CreateOpportunityPage() {
     const newOpportunity = {
       id: uuidv4(),
       title: formData.title,
-      type: formData.type as 'Curso' | 'Workshop' | 'Projeto' | 'Evento' | 'Liga',
+      type: formData.type as
+        | "Curso"
+        | "Workshop"
+        | "Projeto"
+        | "Evento"
+        | "Liga",
       description: formData.description,
       hours: parseInt(formData.hours),
       slots: parseInt(formData.slots),
       filledSlots: 0,
-      date: new Date().toLocaleDateString('pt-BR'),
+      date: new Date().toLocaleDateString("pt-BR"),
       instructor: formData.instructor,
-      status: 'Ativo' as const,
-      validation: formData.validation as 'Automática' | 'Manual',
+      status: "Ativo" as const,
+      validation: formData.validation as "Automática" | "Manual",
       startDate: formData.startDate,
       endDate: formData.endDate,
       studentResponsible: formData.studentResponsible || undefined,
@@ -71,28 +93,38 @@ export default function CreateOpportunityPage() {
 
     addCoordinatorOpportunity(newOpportunity);
 
-    addAlert('success', 'Oportunidade criada', `${formData.title} foi criada com sucesso.`);
+    addAlert(
+      "success",
+      "Oportunidade criada",
+      `${formData.title} foi criada com sucesso.`
+    );
 
     setTimeout(() => {
-      navigate('/coordinator/opportunities');
+      navigate("/coordinator/opportunities");
     }, 1500);
   };
 
   return (
-    <AppLayout breadcrumb={['Início', 'Gestão de Oportunidades', 'Criar Oportunidade']}>
+    <AppLayout
+      breadcrumb={["Início", "Gestão de Oportunidades", "Criar Oportunidade"]}
+    >
       <div className="space-y-6">
         {/* Header */}
         <div className="flex items-center gap-4 mb-6">
           <Button
             variant="outline"
             size="icon"
-            onClick={() => navigate('/coordinator/opportunities')}
+            onClick={() => navigate("/coordinator/opportunities")}
           >
             <ArrowLeft className="w-4 h-4" />
           </Button>
           <div>
-            <h1 className="text-2xl font-bold text-primary">Criar Nova Oportunidade</h1>
-            <p className="text-muted-foreground">Preencha os dados para cadastrar uma nova oportunidade de extensão</p>
+            <h1 className="text-2xl font-bold text-primary">
+              Criar Nova Oportunidade
+            </h1>
+            <p className="text-muted-foreground">
+              Preencha os dados para cadastrar uma nova oportunidade de extensão
+            </p>
           </div>
         </div>
 
@@ -254,44 +286,104 @@ export default function CreateOpportunityPage() {
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <Label htmlFor="instructor">Docente Responsável *</Label>
-                    <Input
-                      id="instructor"
-                      placeholder="Ex: Dr. João Silva"
+                    <Select
                       value={formData.instructor}
-                      onChange={(e) =>
-                        setFormData({ ...formData, instructor: e.target.value })
+                      onValueChange={(value) =>
+                        setFormData({ ...formData, instructor: value })
                       }
-                      required
-                    />
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Selecione um docente" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-popover">
+                        {mockTeachers.map((teacher) => (
+                          <SelectItem key={teacher.id} value={teacher.name}>
+                            {teacher.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="studentResponsible">Aluno Responsável (Opcional)</Label>
-                    <Input
-                      id="studentResponsible"
-                      placeholder="Nome do aluno ou monitor"
-                      value={formData.studentResponsible}
-                      onChange={(e) =>
-                        setFormData({ ...formData, studentResponsible: e.target.value })
+                    <Label htmlFor="studentResponsible">
+                      Aluno Responsável (Opcional)
+                    </Label>
+                    <Select
+                      value={formData.studentResponsible || "none"}
+                      onValueChange={(value) =>
+                        setFormData({
+                          ...formData,
+                          studentResponsible: value === "none" ? "" : value,
+                        })
                       }
-                    />
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Selecione um aluno" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-popover">
+                        <SelectItem value="none">Nenhum aluno</SelectItem>
+                        {mockStudents.map((student) => (
+                          <SelectItem key={student.id} value={student.name}>
+                            {student.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </div>
+                </div>
+              </div>
+
+              {/* Vinculação a Grupo */}
+              <div className="space-y-4 pt-4 border-t">
+                <h3 className="text-lg font-semibold">
+                  Vinculação a Grupo (Opcional)
+                </h3>
+
+                <div className="space-y-2">
+                  <Label htmlFor="linkedGroup">
+                    Vincular a um Grupo Acadêmico
+                  </Label>
+                  <Select
+                    value={formData.linkedGroup || "none"}
+                    onValueChange={(value) =>
+                      setFormData({
+                        ...formData,
+                        linkedGroup: value === "none" ? "" : value,
+                      })
+                    }
+                  >
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className="bg-popover">
+                      <SelectItem value="none">
+                        Nenhum grupo selecionado
+                      </SelectItem>
+                      {mockGroups.map((group) => (
+                        <SelectItem key={group.id} value={group.id}>
+                          {group.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <p className="text-xs text-muted-foreground">
+                    Esta oportunidade será vinculada ao grupo acadêmico
+                    selecionado, caso aplicável.
+                  </p>
                 </div>
               </div>
 
               {/* Botões */}
               <div className="flex gap-4 pt-6 border-t">
-                <Button
-                  type="submit"
-                  className="flex-1"
-                >
+                <Button type="submit" className="flex-1">
                   Criar Oportunidade
                 </Button>
                 <Button
                   type="button"
                   variant="outline"
                   className="flex-1"
-                  onClick={() => navigate('/coordinator/opportunities')}
+                  onClick={() => navigate("/coordinator/opportunities")}
                 >
                   Cancelar
                 </Button>
