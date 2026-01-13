@@ -1,7 +1,9 @@
 import { Briefcase, HelpCircle, FileCheck } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { FeatureCard } from "./FeatureCard";
 
 export function FeaturesSection() {
+  const navigate = useNavigate();
   const features = [
     {
       icon: Briefcase,
@@ -37,7 +39,8 @@ export function FeaturesSection() {
             Acesso Rápido
           </h2>
           <p className="mx-auto max-w-2xl text-muted-foreground">
-            Navegue pelas principais funcionalidades do sistema de extensão da UFMA
+            Navegue pelas principais funcionalidades do sistema de extensão da
+            UFMA
           </p>
         </div>
 
@@ -54,7 +57,17 @@ export function FeaturesSection() {
             />
           ))}
         </div>
+
+        {/* Papéis Link */}
+        <div className="mt-8">
+          <button
+            onClick={() => navigate("/papeis")}
+            className="text-primary font-semibold hover:text-primary/80 transition-colors text-sm"
+          >
+            Papéis
+          </button>
+        </div>
       </div>
     </section>
   );
-};
+}
