@@ -198,13 +198,6 @@ export const users = {
     role: "docente",
     course: "Ciência da Computação",
   },
-  secretary: {
-    id: "4",
-    name: "Maria Oliveira",
-    email: "maria.oliveira@ufma.br",
-    role: "secretaria",
-    course: "Ciência da Computação",
-  },
   student_scholar: {
     id: "5",
     name: "João Pereira",
