@@ -66,6 +66,8 @@ export default function PapeisPage() {
                   ))}
                 </tbody>
               </table>
+              <div>CERT-2025-001
+              </div>
             </div>
           </CardContent>
         </Card>
