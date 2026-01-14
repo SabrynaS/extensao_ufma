@@ -12,7 +12,7 @@ export default function PapeisPage() {
     coordenador: "Coordenador",
     docente: "Docente",
     secretaria: "Secretária",
-    student_scholar: "Diretor",
+    student_scholar: "Discente Líder",
     admin: "Administrador",
     comissao: "Comissão",
   };

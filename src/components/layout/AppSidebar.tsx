@@ -16,7 +16,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/contexts/AuthContext";
-import {NavLink} from "@/components/NavLink";
+import { NavLink } from "@/components/NavLink";
 
 interface NavItem {
   title: string;
@@ -30,7 +30,6 @@ const studentScholarNavItems: NavItem[] = [
   { title: "Minhas Solicitações", icon: FileText, path: "/student/requests" },
   { title: "Oportunidades", icon: Search, path: "/events" },
   { title: "Criar Evento", icon: CalendarIcon, path: "/events/create" },
-  { title: "Meus Certificados", icon: Award, path: "/student/certificates" },
   { title: "Perfil", icon: User, path: "/student/profile" },
 ];
 
@@ -38,11 +37,8 @@ const studentNavItems: NavItem[] = [
   { title: "Visão Geral", icon: LayoutDashboard, path: "/student" },
   { title: "Minhas Solicitações", icon: FileText, path: "/student/requests" },
   { title: "Oportunidades", icon: Search, path: "/events" },
-  { title: "Meus Certificados", icon: Award, path: "/student/certificates" },
   { title: "Perfil", icon: User, path: "/student/profile" },
 ];
-
-
 
 const coordinatorNavItems: NavItem[] = [
   { title: "Painel Geral", icon: LayoutDashboard, path: "/coordinator" },
@@ -73,10 +69,23 @@ const coordinatorNavItems: NavItem[] = [
 ];
 
 const teacherNavItems: NavItem[] = [
-  { title: 'Painel Geral', icon: LayoutDashboard, path: '/teacher' },
-  { title: 'Meus Grupos', icon: Users, path: '/teacher/groups' },
-  { title: 'Minhas Oportunidades', icon: Search, path: '/teacher/opportunities' },
-  { title: 'Perfil', icon: User, path: '/teacher/profile' },
+  { title: "Painel Geral", icon: LayoutDashboard, path: "/teacher" },
+  { title: "Meus Grupos", icon: Users, path: "/teacher/groups" },
+  {
+    title: "Minhas Oportunidades",
+    icon: Search,
+    path: "/teacher/opportunities",
+  },
+  { title: "Perfil", icon: User, path: "/teacher/profile" },
+];
+
+const commissionNavItems: NavItem[] = [
+  {
+    title: "Solicitações de Validação",
+    icon: ClipboardList,
+    path: "/commission",
+  },
+  { title: "Perfil", icon: User, path: "/student/profile" },
 ];
 
 // Novos itens do admin
@@ -103,6 +112,16 @@ const roleConfig = {
   secretaria: {
     navItems: coordinatorNavItems,
     panelTitle: "Painel da Secretaria",
+  },
+
+  comissao: {
+    navItems: commissionNavItems,
+    panelTitle: "Painel da Comissão",
+  },
+
+  commission: {
+    navItems: commissionNavItems,
+    panelTitle: "Painel da Comissão",
   },
 
   teacher: {
@@ -156,7 +175,11 @@ export default function AppSidebar() {
       <div className="p-4 border-b border-sidebar-border">
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 rounded-lg bg-sidebar-primary flex items-center justify-center">
-            <img src="/logoUfma.png" alt="Logo UFMA" className="w-6 h-6 object-contain" />
+            <img
+              src="/logoUfma.png"
+              alt="Logo UFMA"
+              className="w-6 h-6 object-contain"
+            />
           </div>
           <div>
             <h1 className="font-semibold text-sm">Extensão UFMA</h1>

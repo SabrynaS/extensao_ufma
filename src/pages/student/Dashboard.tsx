@@ -3,10 +3,18 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
+import { Eye } from "lucide-react";
 import {
-  Eye,
-} from "lucide-react";
-import { FaFileAlt, FaSearch, FaFileDownload, FaCheckCircle, FaClock, FaExclamationCircle, FaPlus, FaArrowRight, FaFire } from "react-icons/fa";
+  FaFileAlt,
+  FaSearch,
+  FaFileDownload,
+  FaCheckCircle,
+  FaClock,
+  FaExclamationCircle,
+  FaPlus,
+  FaArrowRight,
+  FaFire,
+} from "react-icons/fa";
 import { studentProgress, solicitations, certificates } from "@/data/mockData";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -18,7 +26,9 @@ export default function StudentDashboard() {
   const navigate = useNavigate();
   const { addAlert } = useAlerts();
   const [showNewSolicitation, setShowNewSolicitation] = useState(false);
-  const [selectedSolicitation, setSelectedSolicitation] = useState<typeof solicitations[0] | null>(null);
+  const [selectedSolicitation, setSelectedSolicitation] = useState<
+    (typeof solicitations)[0] | null
+  >(null);
 
   const mySolicitations = solicitations
     .filter((s) => s.studentId === "1")
@@ -71,41 +81,68 @@ export default function StudentDashboard() {
             <div className="absolute bottom-0 left-0 w-32 h-32 bg-white/5 rounded-full -ml-16 -mb-16"></div>
             <div className="relative z-10">
               <div className="flex items-center gap-3 mb-2">
-                
-                <span className="text-sm font-semibold text-white/80">Seu Progresso de Extensão</span>
+                <span className="text-sm font-semibold text-white/80">
+                  Seu Progresso de Extensão
+                </span>
               </div>
-              <h1 className="text-3xl font-bold mb-2">Você está indo muito bem!</h1>
-              <p className="text-green-100">Mantenha o ritmo e complete suas atividades de extensão</p>
+              <h1 className="text-3xl font-bold mb-2">
+                Você está indo muito bem!
+              </h1>
+              <p className="text-green-100">
+                Mantenha o ritmo e complete suas atividades de extensão
+              </p>
             </div>
           </div>
         </div>
 
         {/* Progress Card Redesenhado */}
         <Card className="border-0 shadow-lg overflow-hidden">
-          <p className="text-45 text-slate-500 mt-2 px-8">Baseado no PPC 2024.1</p>
+          <p className="text-45 text-slate-500 mt-2 px-8">
+            Baseado no PPC 2024.1
+          </p>
           <CardContent className="p-8 bg-gradient-to-br from-slate-50 to-slate-100">
             <div className="space-y-8">
               {/* Stats em destaque */}
               <div className="grid grid-cols-3 gap-4">
                 <div className="relative p-4 bg-white rounded-xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
                   <div className="relative z-10">
-                    <p className="text-xs text-slate-500 font-medium mb-1">APROVADAS</p>
-                    <p className="text-3xl font-bold text-success">{studentProgress.approved}h</p>
+                    <p className="text-xs text-slate-500 font-medium mb-1">
+                      APROVADAS
+                    </p>
+                    <p className="text-3xl font-bold text-success">
+                      {studentProgress.approved}h
+                    </p>
                     <p className="text-xs text-slate-400 mt-1">Confirmado</p>
                   </div>
                 </div>
                 <div className="relative p-4 bg-white rounded-xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
                   <div className="relative z-10">
-                    <p className="text-xs text-slate-500 font-medium mb-1">EM ANÁLISE</p>
-                    <p className="text-3xl font-bold text-warning">{studentProgress.pending}h</p>
+                    <p className="text-xs text-slate-500 font-medium mb-1">
+                      EM ANÁLISE
+                    </p>
+                    <p className="text-3xl font-bold text-warning">
+                      {studentProgress.pending}h
+                    </p>
                     <p className="text-xs text-slate-400 mt-1">Aguardando</p>
                   </div>
                 </div>
                 <div className="relative p-4 bg-white rounded-xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
                   <div className="relative z-10">
-                    <p className="text-xs text-slate-500 font-medium mb-1">FALTAM</p>
-                    <p className="text-3xl font-bold text-red-600">{Math.max(0, studentProgress.required - studentProgress.approved - studentProgress.pending)}h</p>
-                    <p className="text-xs text-slate-400 mt-1">Para completar</p>
+                    <p className="text-xs text-slate-500 font-medium mb-1">
+                      FALTAM
+                    </p>
+                    <p className="text-3xl font-bold text-red-600">
+                      {Math.max(
+                        0,
+                        studentProgress.required -
+                          studentProgress.approved -
+                          studentProgress.pending
+                      )}
+                      h
+                    </p>
+                    <p className="text-xs text-slate-400 mt-1">
+                      Para completar
+                    </p>
                   </div>
                 </div>
               </div>
@@ -116,7 +153,10 @@ export default function StudentDashboard() {
                   <div>
                     <p className="text-xl font-bold text-slate-900">
                       {studentProgress.approved + studentProgress.pending}h
-                      <span className="text-slate-400 font-normal"> / {studentProgress.required}h</span>
+                      <span className="text-slate-400 font-normal">
+                        {" "}
+                        / {studentProgress.required}h
+                      </span>
                     </p>
                   </div>
                   <span className="text-lg font-bold text-blue-600">
@@ -141,7 +181,12 @@ export default function StudentDashboard() {
                   </div>
                 </div>
                 <p className="text-xs text-slate-500 mt-2">
-                  {Math.round(progressPercentage) >= 100 ? "✅ Meta atingida!" : `${Math.max(0, 100 - Math.round(progressPercentage))}% para atingir a meta`}
+                  {Math.round(progressPercentage) >= 100
+                    ? "✅ Meta atingida!"
+                    : `${Math.max(
+                        0,
+                        100 - Math.round(progressPercentage)
+                      )}% para atingir a meta`}
                 </p>
               </div>
             </div>
@@ -159,7 +204,9 @@ export default function StudentDashboard() {
               <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-warning/20 to-orange-500/20 flex items-center justify-center mb-4 group-hover:shadow-lg transition-all relative z-10">
                 <FaPlus className="w-7 h-7 text-warning group-hover:scale-110 transition-transform" />
               </div>
-              <h3 className="font-bold text-lg mb-1 relative z-10">Nova Solicitação</h3>
+              <h3 className="font-bold text-lg mb-1 relative z-10">
+                Nova Solicitação
+              </h3>
               <p className="text-sm text-muted-foreground relative z-10">
                 Enviar certificado
               </p>
@@ -178,31 +225,14 @@ export default function StudentDashboard() {
               <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500/20 to-cyan-500/20 flex items-center justify-center mb-4 group-hover:shadow-lg transition-all relative z-10">
                 <FaSearch className="w-7 h-7 text-blue-600 group-hover:scale-110 transition-transform" />
               </div>
-              <h3 className="font-bold text-lg mb-1 relative z-10">Explorar Eventos</h3>
+              <h3 className="font-bold text-lg mb-1 relative z-10">
+                Explorar Eventos
+              </h3>
               <p className="text-sm text-muted-foreground relative z-10">
                 Novas oportunidades
               </p>
               <div className="mt-3 flex items-center gap-1 text-blue-600 font-semibold text-sm relative z-10 opacity-0 group-hover:opacity-100 transition-opacity">
                 Buscar <FaArrowRight className="w-3 h-3" />
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card
-            className="cursor-pointer border-0 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 group overflow-hidden bg-white"
-            onClick={() => navigate("/student/certificates")}
-          >
-            <CardContent className="p-6 flex flex-col items-center text-center relative">
-              <div className="absolute inset-0 bg-gradient-to-br from-success/5 to-emerald-500/5 group-hover:from-success/10 group-hover:to-emerald-500/10 transition-colors"></div>
-              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-success/20 to-emerald-500/20 flex items-center justify-center mb-4 group-hover:shadow-lg transition-all relative z-10">
-                <FaFileDownload className="w-7 h-7 text-success group-hover:scale-110 transition-transform" />
-              </div>
-              <h3 className="font-bold text-lg mb-1 relative z-10">Minhas Declarações</h3>
-              <p className="text-sm text-muted-foreground relative z-10">
-                Baixar comprovante
-              </p>
-              <div className="mt-3 flex items-center gap-1 text-success font-semibold text-sm relative z-10 opacity-0 group-hover:opacity-100 transition-opacity">
-                Baixar <FaArrowRight className="w-3 h-3" />
               </div>
             </CardContent>
           </Card>

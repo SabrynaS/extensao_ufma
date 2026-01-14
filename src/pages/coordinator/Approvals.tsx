@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
 import { useAlerts } from "@/hooks/useAlerts";
 import { useSolicitations } from "@/contexts/SolicitationsContext";
 
@@ -22,7 +23,9 @@ export default function CoordinatorApprovals() {
   const [activeTab, setActiveTab] = useState("all");
   const { addAlert } = useAlerts();
   const navigate = useNavigate();
+  const { user } = useAuth();
   const { solicitations } = useSolicitations();
+  const isCommission = user?.role === "comissao" || user?.role === "commission";
 
   const pendingSolicitations = solicitations.filter(
     (s) => s.status === "Pendente" || s.status === "Em Ajuste"
@@ -54,12 +57,17 @@ export default function CoordinatorApprovals() {
               Solicitações aguardando análise e validação da coordenação
             </p>
           </div>
-          <Button onClick={() => navigate("/coordinator/approvals/delegate")} className="gap-2">
-            <Share2 className="w-4 h-4" />
-            Delegar Solicitações
-          </Button>
+          {!isCommission && (
+            <Button
+              onClick={() => navigate("/coordinator/approvals/delegate")}
+              className="gap-2"
+            >
+              <Share2 className="w-4 h-4" />
+              Delegar Solicitações
+            </Button>
+          )}
         </div>
-        
+
         <Card>
           <CardContent className="p-6">
             <div className="mb-4">

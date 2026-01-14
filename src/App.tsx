@@ -17,7 +17,6 @@ import SignUp from "./pages/SignUp";
 import StudentDashboard from "./pages/student/Dashboard";
 import StudentRequests from "./pages/student/Requests";
 import StudentEvents from "./pages/student/Events";
-import StudentCertificates from "./pages/student/Certificates";
 import StudentProfile from "./pages/student/Profile";
 import CoordinatorReports from "./pages/coordinator/Reports";
 import CoordinatorApprovals from "./pages/coordinator/Approvals";
@@ -79,6 +78,7 @@ function AppRoutes() {
     const role = user.role;
     if (role === "admin") return "/admin";
     if (role === "coordenador" || role === "coordinator") return "/coordinator";
+    if (role === "comissao" || role === "commission") return "/commission";
     if (role === "docente" || role === "teacher") return "/teacher";
     if (role === "student_scholar") return "/events/create";
     return "/student";
@@ -114,14 +114,6 @@ function AppRoutes() {
         element={
           <ProtectedRoute>
             <StudentRequests />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/student/certificates"
-        element={
-          <ProtectedRoute>
-            <StudentCertificates />
           </ProtectedRoute>
         }
       />
@@ -286,6 +278,24 @@ function AppRoutes() {
         element={
           <ProtectedRoute>
             <EditEvent />
+          </ProtectedRoute>
+        }
+      />
+
+      {/* Commission Routes */}
+      <Route
+        path="/commission"
+        element={
+          <ProtectedRoute>
+            <CoordinatorApprovals />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/commission/approvals/:id"
+        element={
+          <ProtectedRoute>
+            <SolicitationValidation />
           </ProtectedRoute>
         }
       />
