@@ -23,7 +23,7 @@ export function FeatureCard({
     accent: "bg-accent/90 text-accent-foreground group-hover:bg-accent group-hover:text-accent-foreground",
     secondary: "bg-secondary text-secondary-foreground group-hover:bg-primary group-hover:text-primary-foreground",
   };
-
+  console.log("teste", href);
   return (
     <a
       href={href}
