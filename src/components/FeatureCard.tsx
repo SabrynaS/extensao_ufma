@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
 import { LucideIcon } from "lucide-react";
+import { Link } from "react-router-dom";
 
 interface FeatureCardProps {
   icon: LucideIcon;
@@ -14,19 +15,25 @@ export function FeatureCard({
   icon: Icon,
   title,
   description,
-  href, 
+  href,
   accentColor = "primary",
   delay = 0,
 }: FeatureCardProps) {
   const colorClasses = {
-    primary: "bg-primary/60 text-primary group-hover:bg-primary group-hover:text-primary-foreground",
-    accent: "bg-accent/90 text-accent-foreground group-hover:bg-accent group-hover:text-accent-foreground",
-    secondary: "bg-secondary text-secondary-foreground group-hover:bg-primary group-hover:text-primary-foreground",
+    primary:
+      "bg-primary/60 text-primary group-hover:bg-primary group-hover:text-primary-foreground",
+    accent:
+      "bg-accent/90 text-accent-foreground group-hover:bg-accent group-hover:text-accent-foreground",
+    secondary:
+      "bg-secondary text-secondary-foreground group-hover:bg-primary group-hover:text-primary-foreground",
   };
-  console.log("teste", href);
+
+  // Garante que rota interna seja absoluta
+  const to = href.startsWith("/") ? href : `/${href}`;
+
   return (
-    <a
-      href={href}
+    <Link
+      to={to}
       className="group animate-fade-in"
       style={{ animationDelay: `${delay}ms` }}
     >
@@ -34,7 +41,7 @@ export function FeatureCard({
         <div
           className={cn(
             "mb-4 inline-flex h-14 w-14 items-center justify-center rounded-xl transition-all duration-300",
-            colorClasses[accentColor]
+            colorClasses[accentColor],
           )}
         >
           <Icon className="h-7 w-7" />
@@ -42,6 +49,6 @@ export function FeatureCard({
         <h3 className="mb-2 text-xl font-bold text-card-foreground">{title}</h3>
         <p className="text-muted-foreground">{description}</p>
       </div>
-    </a>
+    </Link>
   );
-};
+}

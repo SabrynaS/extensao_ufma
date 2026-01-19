@@ -57,16 +57,6 @@ export function FeaturesSection() {
             />
           ))}
         </div>
-
-        {/* Papéis Link */}
-        <div className="mt-8">
-          <button
-            onClick={() => navigate("/papeis")}
-            className="text-primary font-semibold hover:text-primary/80 transition-colors text-sm"
-          >
-            Papéis
-          </button>
-        </div>
       </div>
     </section>
   );
