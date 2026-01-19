@@ -72,6 +72,14 @@ export interface Solicitation {
   delegatedTo?: string; // ID do membro da comissão que está ajudando
 }
 
+export interface StudentCertificate {
+  id: string;
+  name: string;
+  email: string;
+  enrollment: string;
+  course: string;
+}
+
 export interface Opportunity {
   id: string;
   title: string;
@@ -95,6 +103,7 @@ export interface Opportunity {
   createdAt?: string;
   startDate?: string;
   endDate?: string;
+  enrolledStudents: StudentCertificate[];
 }
 
 export interface Student {
@@ -529,6 +538,13 @@ export const opportunities: Opportunity[] = [
     status: "Inscrições Abertas",
     validation: "Automática",
     period: "15/01/2026 - 22/01/2026",
+    enrolledStudents: [
+      { id: "s1", name: "Ana Carolina Santos", email: "ana.santos@email.com", enrollment: "2021001234", course: "Ciência da Computação" },
+      { id: "s2", name: "Bruno Oliveira Lima", email: "bruno.lima@email.com", enrollment: "2021001235", course: "Engenharia de Software" },
+      { id: "s3", name: "Carla Mendes", email: "carla.mendes@email.com", enrollment: "2021001236", course: "Ciência da Computação" },
+      { id: "s4", name: "Daniel Ferreira", email: "daniel.ferreira@email.com", enrollment: "2021001237", course: "Sistemas de Informação" },
+      { id: "s5", name: "Elena Rodrigues", email: "elena.rodrigues@email.com", enrollment: "2021001238", course: "Ciência da Computação" },
+    ]
   },
   {
     id: "2",
@@ -544,6 +560,11 @@ export const opportunities: Opportunity[] = [
     status: "Inscrições Abertas",
     validation: "Manual",
     period: "01/02/2026 - 30/06/2026",
+    enrolledStudents: [
+      { id: "s10", name: "Julia Pereira", email: "julia.pereira@email.com", enrollment: "2020000111", course: "Engenharia Civil" },
+      { id: "s11", name: "Kevin Santos", email: "kevin.santos@email.com", enrollment: "2020000112", course: "Matemática" },
+      { id: "s12", name: "Larissa Gomes", email: "larissa.gomes@email.com", enrollment: "2020000113", course: "Física" },
+    ]
   },
   {
     id: "3",
@@ -559,6 +580,13 @@ export const opportunities: Opportunity[] = [
     status: "Inscrições Abertas",
     validation: "Automática",
     period: "10/02/2026 - 10/03/2026",
+    enrolledStudents: [
+      { id: "s13", name: "Marcos Vieira", email: "marcos.vieira@email.com", enrollment: "2023003451", course: "Engenharia Ambiental" },
+      { id: "s14", name: "Natália Souza", email: "natalia.souza@email.com", enrollment: "2023003452", course: "Biologia" },
+      { id: "s15", name: "Oscar Barbosa", email: "oscar.barbosa@email.com", enrollment: "2023003453", course: "Química" },
+      { id: "s16", name: "Patrícia Lima", email: "patricia.lima@email.com", enrollment: "2023003454", course: "Engenharia Ambiental" },
+      { id: "s17", name: "Quirino Alves", email: "quirino.alves@email.com", enrollment: "2023003455", course: "Geografia" },
+    ]
   },
   {
     id: "4",
@@ -573,6 +601,11 @@ export const opportunities: Opportunity[] = [
     instructor: "Coord. Extensão",
     status: "Inscrições Abertas",
     validation: "Automática",
+    enrolledStudents: [
+      { id: "s18", name: "Rafael Cunha", email: "rafael.cunha@email.com", enrollment: "2021001567", course: "Química Industrial" },
+      { id: "s19", name: "Samantha Dias", email: "samantha.dias@email.com", enrollment: "2021001568", course: "Química" },
+      { id: "s20", name: "Thiago Rocha", email: "thiago.rocha@email.com", enrollment: "2021001569", course: "Engenharia Química" },
+    ]
   },
   {
     id: "5",
@@ -587,6 +620,12 @@ export const opportunities: Opportunity[] = [
     instructor: "Prof. Ana Lima",
     status: "Inscrições Abertas",
     validation: "Manual",
+    enrolledStudents: [
+      { id: "s21", name: "Úrsula Fernandes", email: "ursula.fernandes@email.com", enrollment: "2022002678", course: "Letras" },
+      { id: "s22", name: "Victor Hugo", email: "victor.hugo@email.com", enrollment: "2022002679", course: "Pedagogia" },
+      { id: "s23", name: "Wanda Nascimento", email: "wanda.nascimento@email.com", enrollment: "2022002680", course: "Fonoaudiologia" },
+      { id: "s24", name: "Xavier Pinto", email: "xavier.pinto@email.com", enrollment: "2022002681", course: "Psicologia" },
+    ]
   },
   {
     id: "6",
@@ -601,6 +640,12 @@ export const opportunities: Opportunity[] = [
     instructor: "Profa. Clara Souza",
     status: "Vagas Esgotadas",
     validation: "Automática",
+    enrolledStudents: [
+      { id: "s21", name: "Úrsula Fernandes", email: "ursula.fernandes@email.com", enrollment: "2022002678", course: "Letras" },
+      { id: "s22", name: "Victor Hugo", email: "victor.hugo@email.com", enrollment: "2022002679", course: "Pedagogia" },
+      { id: "s23", name: "Wanda Nascimento", email: "wanda.nascimento@email.com", enrollment: "2022002680", course: "Fonoaudiologia" },
+      { id: "s24", name: "Xavier Pinto", email: "xavier.pinto@email.com", enrollment: "2022002681", course: "Psicologia" },
+    ]
   },
 ];
 
@@ -807,6 +852,12 @@ export const coordinatorOpportunities: Opportunity[] = [
     period: "15/01/2026 - 22/01/2026",
     startDate: "2026-01-15",
     endDate: "2026-01-22",
+    enrolledStudents: [
+      { id: "s21", name: "Úrsula Fernandes", email: "ursula.fernandes@email.com", enrollment: "2022002678", course: "Letras" },
+      { id: "s22", name: "Victor Hugo", email: "victor.hugo@email.com", enrollment: "2022002679", course: "Pedagogia" },
+      { id: "s23", name: "Wanda Nascimento", email: "wanda.nascimento@email.com", enrollment: "2022002680", course: "Fonoaudiologia" },
+      { id: "s24", name: "Xavier Pinto", email: "xavier.pinto@email.com", enrollment: "2022002681", course: "Psicologia" },
+    ]
   },
   {
     id: "2",
@@ -823,6 +874,12 @@ export const coordinatorOpportunities: Opportunity[] = [
     period: "01/02/2026 - 30/06/2026",
     startDate: "2026-02-01",
     endDate: "2026-06-30",
+    enrolledStudents: [
+      { id: "s21", name: "Úrsula Fernandes", email: "ursula.fernandes@email.com", enrollment: "2022002678", course: "Letras" },
+      { id: "s22", name: "Victor Hugo", email: "victor.hugo@email.com", enrollment: "2022002679", course: "Pedagogia" },
+      { id: "s23", name: "Wanda Nascimento", email: "wanda.nascimento@email.com", enrollment: "2022002680", course: "Fonoaudiologia" },
+      { id: "s24", name: "Xavier Pinto", email: "xavier.pinto@email.com", enrollment: "2022002681", course: "Psicologia" },
+    ]
   },
   {
     id: "3",
@@ -839,6 +896,12 @@ export const coordinatorOpportunities: Opportunity[] = [
     period: "10/02/2026 - 10/03/2026",
     startDate: "2026-02-10",
     endDate: "2026-03-10",
+    enrolledStudents: [
+      { id: "s21", name: "Úrsula Fernandes", email: "ursula.fernandes@email.com", enrollment: "2022002678", course: "Letras" },
+      { id: "s22", name: "Victor Hugo", email: "victor.hugo@email.com", enrollment: "2022002679", course: "Pedagogia" },
+      { id: "s23", name: "Wanda Nascimento", email: "wanda.nascimento@email.com", enrollment: "2022002680", course: "Fonoaudiologia" },
+      { id: "s24", name: "Xavier Pinto", email: "xavier.pinto@email.com", enrollment: "2022002681", course: "Psicologia" },
+    ]
   },
   {
     id: "4",
@@ -855,6 +918,12 @@ export const coordinatorOpportunities: Opportunity[] = [
     period: "01/11/2025 - 05/11/2025",
     startDate: "2025-11-01",
     endDate: "2025-11-05",
+    enrolledStudents: [
+      { id: "s21", name: "Úrsula Fernandes", email: "ursula.fernandes@email.com", enrollment: "2022002678", course: "Letras" },
+      { id: "s22", name: "Victor Hugo", email: "victor.hugo@email.com", enrollment: "2022002679", course: "Pedagogia" },
+      { id: "s23", name: "Wanda Nascimento", email: "wanda.nascimento@email.com", enrollment: "2022002680", course: "Fonoaudiologia" },
+      { id: "s24", name: "Xavier Pinto", email: "xavier.pinto@email.com", enrollment: "2022002681", course: "Psicologia" },
+    ]
   },
   {
     id: "5",
@@ -871,6 +940,12 @@ export const coordinatorOpportunities: Opportunity[] = [
     period: "15/01/2026 - 30/06/2026",
     startDate: "2026-01-15",
     endDate: "2026-06-30",
+    enrolledStudents: [
+      { id: "s21", name: "Úrsula Fernandes", email: "ursula.fernandes@email.com", enrollment: "2022002678", course: "Letras" },
+      { id: "s22", name: "Victor Hugo", email: "victor.hugo@email.com", enrollment: "2022002679", course: "Pedagogia" },
+      { id: "s23", name: "Wanda Nascimento", email: "wanda.nascimento@email.com", enrollment: "2022002680", course: "Fonoaudiologia" },
+      { id: "s24", name: "Xavier Pinto", email: "xavier.pinto@email.com", enrollment: "2022002681", course: "Psicologia" },
+    ]
   },
 ];
 
@@ -1028,6 +1103,12 @@ export const userCreatedOpportunities: Opportunity[] = [
     createdAt: "10/12/2025",
     startDate: "2026-01-20",
     endDate: "2026-01-27",
+    enrolledStudents: [
+      { id: "s21", name: "Úrsula Fernandes", email: "ursula.fernandes@email.com", enrollment: "2022002678", course: "Letras" },
+      { id: "s22", name: "Victor Hugo", email: "victor.hugo@email.com", enrollment: "2022002679", course: "Pedagogia" },
+      { id: "s23", name: "Wanda Nascimento", email: "wanda.nascimento@email.com", enrollment: "2022002680", course: "Fonoaudiologia" },
+      { id: "s24", name: "Xavier Pinto", email: "xavier.pinto@email.com", enrollment: "2022002681", course: "Psicologia" },
+    ]
   },
   {
     id: "uc2",
@@ -1046,6 +1127,12 @@ export const userCreatedOpportunities: Opportunity[] = [
     createdAt: "15/11/2025",
     startDate: "2026-02-01",
     endDate: "2026-06-30",
+    enrolledStudents: [
+      { id: "s21", name: "Úrsula Fernandes", email: "ursula.fernandes@email.com", enrollment: "2022002678", course: "Letras" },
+      { id: "s22", name: "Victor Hugo", email: "victor.hugo@email.com", enrollment: "2022002679", course: "Pedagogia" },
+      { id: "s23", name: "Wanda Nascimento", email: "wanda.nascimento@email.com", enrollment: "2022002680", course: "Fonoaudiologia" },
+      { id: "s24", name: "Xavier Pinto", email: "xavier.pinto@email.com", enrollment: "2022002681", course: "Psicologia" },
+    ]
   },
   {
     id: "uc3",
@@ -1064,6 +1151,12 @@ export const userCreatedOpportunities: Opportunity[] = [
     createdAt: "05/12/2025",
     startDate: "2026-01-10",
     endDate: "2026-01-20",
+    enrolledStudents: [
+      { id: "s21", name: "Úrsula Fernandes", email: "ursula.fernandes@email.com", enrollment: "2022002678", course: "Letras" },
+      { id: "s22", name: "Victor Hugo", email: "victor.hugo@email.com", enrollment: "2022002679", course: "Pedagogia" },
+      { id: "s23", name: "Wanda Nascimento", email: "wanda.nascimento@email.com", enrollment: "2022002680", course: "Fonoaudiologia" },
+      { id: "s24", name: "Xavier Pinto", email: "xavier.pinto@email.com", enrollment: "2022002681", course: "Psicologia" },
+    ]
   },
   {
     id: "uc4",
@@ -1082,6 +1175,12 @@ export const userCreatedOpportunities: Opportunity[] = [
     createdAt: "10/11/2025",
     startDate: "2025-12-15",
     endDate: "2025-12-22",
+    enrolledStudents: [
+      { id: "s21", name: "Úrsula Fernandes", email: "ursula.fernandes@email.com", enrollment: "2022002678", course: "Letras" },
+      { id: "s22", name: "Victor Hugo", email: "victor.hugo@email.com", enrollment: "2022002679", course: "Pedagogia" },
+      { id: "s23", name: "Wanda Nascimento", email: "wanda.nascimento@email.com", enrollment: "2022002680", course: "Fonoaudiologia" },
+      { id: "s24", name: "Xavier Pinto", email: "xavier.pinto@email.com", enrollment: "2022002681", course: "Psicologia" },
+    ]
   },
   {
     id: "uc5",
@@ -1100,5 +1199,11 @@ export const userCreatedOpportunities: Opportunity[] = [
     createdAt: "20/08/2025",
     startDate: "2025-10-03",
     endDate: "2025-11-30",
+    enrolledStudents: [
+      { id: "s21", name: "Úrsula Fernandes", email: "ursula.fernandes@email.com", enrollment: "2022002678", course: "Letras" },
+      { id: "s22", name: "Victor Hugo", email: "victor.hugo@email.com", enrollment: "2022002679", course: "Pedagogia" },
+      { id: "s23", name: "Wanda Nascimento", email: "wanda.nascimento@email.com", enrollment: "2022002680", course: "Fonoaudiologia" },
+      { id: "s24", name: "Xavier Pinto", email: "xavier.pinto@email.com", enrollment: "2022002681", course: "Psicologia" },
+    ]
   },
 ];
