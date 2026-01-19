@@ -80,6 +80,13 @@ const teacherNavItems: NavItem[] = [
 ];
 
 const commissionNavItems: NavItem[] = [
+  { title: "Painel Geral", icon: LayoutDashboard, path: "/teacher" },
+  { title: "Meus Grupos", icon: Users, path: "/teacher/groups" },
+  {
+    title: "Minhas Oportunidades",
+    icon: Search,
+    path: "/teacher/opportunities",
+  },
   {
     title: "Solicitações de Validação",
     icon: ClipboardList,
