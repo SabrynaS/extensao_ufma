@@ -221,6 +221,36 @@ export const users = {
   },
 };
 
+export const groupsThatStudentIsPartOf: StudentGroup[] = [
+  {
+    id: '1',
+    name: 'Diretório Acadêmico de Ciência da Computação',
+    description: 'Representação estudantil do curso de Ciência da Computação, promovendo eventos acadêmicos e culturais.',
+    email: 'da.computacao@universidade.edu.br',
+    type: 'diretorio_academico',
+    responsibleTeacher: {
+      id: 't1',
+      name: 'Dr. João Silva',
+      email: 'joao.silva@ufma.br'
+    },
+    coordinator: {
+      id: 's5',
+      name: 'João Pereira',
+      matricula: '2021001234',
+      email: 'joao@discente.ufma.br',
+      role: 'diretor',
+    },
+    members: [
+      { id: 's1', name: 'João Pereira', email: 'joao@discente.ufma.br', role: 'diretor', matricula: '2021001234' },
+      { id: 's2', name: 'Lucas Oliveira', email: 'lucas.oliveira@discente.ufma.br', role: 'membro', matricula: '2021005678' },
+      { id: 's3', name: 'Maria Clara', email: 'maria.clara@discente.ufma.br', role: 'membro', matricula: '2021009012' },
+    ],
+    status: "active",
+    createdAt: "2024-01-15",
+    updatedAt: "2024-12-01",
+  }
+];
+
 export const mockGroups: StudentGroup[] = [
   {
     id: '1',

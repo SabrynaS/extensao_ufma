@@ -18,6 +18,7 @@ import StudentDashboard from "./pages/student/Dashboard";
 import StudentRequests from "./pages/student/Requests";
 import StudentEvents from "./pages/student/Events";
 import StudentProfile from "./pages/student/Profile";
+import MyGroupsStudent from "./pages/student/MyGroups";
 import CoordinatorReports from "./pages/coordinator/Reports";
 import CoordinatorApprovals from "./pages/coordinator/Approvals";
 import SolicitationValidation from "./pages/coordinator/SolicitationValidation";
@@ -122,6 +123,14 @@ function AppRoutes() {
         element={
           <ProtectedRoute>
             <StudentProfile />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/student/groups"
+        element={
+          <ProtectedRoute>
+            <MyGroupsStudent />
           </ProtectedRoute>
         }
       />

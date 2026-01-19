@@ -29,7 +29,7 @@ const studentScholarNavItems: NavItem[] = [
   { title: "Visão Geral", icon: LayoutDashboard, path: "/student" },
   { title: "Minhas Solicitações", icon: FileText, path: "/student/requests" },
   { title: "Oportunidades", icon: Search, path: "/events" },
-  { title: "Criar Evento", icon: CalendarIcon, path: "/events/create" },
+  { title: "Meus Grupos", icon: CalendarIcon, path: "/events/create" },
   { title: "Perfil", icon: User, path: "/student/profile" },
 ];
 
