@@ -50,6 +50,7 @@ import NotificationsPage from "./pages/Notifications";
 import RegisterExternalActivityPage from "./pages/student/RegisterExternalActivity";
 import PapeisPage from "./pages/Papeis";
 import MockProfiles from "./pages/MockProfiles";
+import StudentCertificates from "./pages/student/Certificates";
 
 const queryClient = new QueryClient();
 
@@ -115,6 +116,14 @@ function AppRoutes() {
         element={
           <ProtectedRoute>
             <StudentRequests />
+          </ProtectedRoute>
+        }
+      />
+      <Route 
+        path="/student/certificates" 
+        element={
+          <ProtectedRoute>
+            <StudentCertificates />
           </ProtectedRoute>
         }
       />
